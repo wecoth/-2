@@ -17,7 +17,7 @@
   }
   .hero {
     width: 100%; height: 100svh; min-height: 600px;
-    display: flex; align-items: center; justify-content: center;
+    display: flex; align-items: flex-start; justify-content: center;
     position: relative; overflow: hidden;
   }
   .hero::before {
@@ -27,34 +27,44 @@
       radial-gradient(ellipse 60% 50% at 78% 80%, #d8d6d1 0%, transparent 55%);
   }
 
-  /* --- пролетающие папки --- */
   .fly-stage {
-    position: absolute; inset: 0;
-    z-index: 1;
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 52vw;
+    max-height: 260px;
+    z-index: 3;
     pointer-events: none;
+    overflow: hidden;
   }
+
   .fly-folder {
     position: absolute;
-    width: min(55vw, 240px);
-    opacity: 0;
+    will-change: transform, opacity;
   }
-  .fly-folder img { width: 100%; display: block; }
+  .fly-folder img {
+    width: 100%;
+    display: block;
+    filter: drop-shadow(0 8px 16px rgba(0,0,0,0.22));
+  }
 
-  /* --- главная папка --- */
   .scene {
     position: relative;
     z-index: 2;
     width: min(94vw, 440px);
+    margin-top: 0;
     transform-origin: center bottom;
     opacity: 0;
+  }
+  .scene.landed {
+    animation: landBounce 0.5s cubic-bezier(0.22,1,0.36,1) both;
   }
   .scene.idle-loop {
     opacity: 1;
     animation: folderIdle 3.6s ease-in-out infinite;
   }
+
   .folder-shadow {
-    width: 60%;
-    height: 20px;
+    width: 60%; height: 20px;
     margin: -22px auto 0;
     background: radial-gradient(ellipse 100% 100% at 50% 50%, rgba(0,0,0,0.28) 0%, transparent 70%);
     transform-origin: center center;
@@ -64,6 +74,7 @@
     opacity: 0.9;
     animation: shadowIdle 3.6s ease-in-out infinite;
   }
+
   .folder-img {
     width: 100%; display: block;
     filter: drop-shadow(0 24px 48px rgba(0,0,0,0.28)) drop-shadow(0 6px 12px rgba(0,0,0,0.16));
@@ -75,11 +86,14 @@
     z-index: 3;
     display: flex; flex-direction: column;
     justify-content: space-between;
+    opacity: 0;
+    transition: opacity 0.3s ease 0.2s;
   }
+  .folder-text.visible { opacity: 1; }
+
   .f-address {
     font-size: clamp(16px, 4.6vw, 22px);
-    font-weight: 400;
-    color: rgba(255,255,255,0.88);
+    font-weight: 400; color: rgba(255,255,255,0.88);
     line-height: 1.28; letter-spacing: -0.2px;
   }
   .f-bottom { display: flex; flex-direction: column; padding-left: 4%; }
@@ -101,35 +115,30 @@
     color: rgba(255,255,255,0.42); margin-top: 4px;
   }
 
+  @keyframes landBounce {
+    0%   { opacity: 0; transform: scale(0.75) translateY(-40px); }
+    55%  { opacity: 1; transform: scale(1.05) translateY(6px); }
+    78%  { transform: scale(0.97) translateY(-3px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+  }
   @keyframes folderIdle {
     0%, 100% { transform: translate3d(0,0,0) scale(1) rotate(0deg); }
     50%       { transform: translate3d(0,-10px,0) scale(0.985) rotate(-0.25deg); }
   }
   @keyframes shadowIdle {
-    0%, 100% { opacity: 0.9;  transform: scale(1.08, 1);    filter: blur(6px); }
-    50%       { opacity: 0.48; transform: scale(0.82, 0.72); filter: blur(8px); }
-  }
-  @keyframes landIn {
-    0%   { opacity: 0; transform: scale(0.7) translateY(-30px); }
-    60%  { opacity: 1; transform: scale(1.04) translateY(4px); }
-    80%  { transform: scale(0.98) translateY(-2px); }
-    100% { transform: scale(1) translateY(0); }
-  }
-  @keyframes shadowLand {
-    0%   { opacity: 0; transform: scale(0.3,0.3); filter: blur(2px); }
-    100% { opacity: 0.9; transform: scale(1.08,1); filter: blur(6px); }
+    0%, 100% { opacity: 0.9;  transform: scale(1.08,1);    filter: blur(6px); }
+    50%       { opacity: 0.48; transform: scale(0.82,0.72); filter: blur(8px); }
   }
 </style>
 </head>
 <body>
 <section class="hero">
-
   <div class="fly-stage" id="flyStage"></div>
 
   <div class="scene" id="scene">
     <img class="folder-img" src="folder.png" alt="">
     <div class="folder-shadow" id="folderShadow"></div>
-    <div class="folder-text">
+    <div class="folder-text" id="folderText">
       <p class="f-address">ул. Красная, 176, кв. 34</p>
       <div class="f-bottom">
         <div class="f-total-row">
@@ -140,98 +149,105 @@
       </div>
     </div>
   </div>
-
 </section>
 
 <script>
-const scene  = document.getElementById('scene');
-const shadow = document.getElementById('folderShadow');
-const stage  = document.getElementById('flyStage');
+const scene      = document.getElementById('scene');
+const shadow     = document.getElementById('folderShadow');
+const folderText = document.getElementById('folderText');
+const stage      = document.getElementById('flyStage');
 
-const FOLDER_COUNT = 7;
-const STRIP_DURATION = 1800;
-const FOLDER_INTERVAL = 160;
-const vh = window.innerHeight;
-const vw = window.innerWidth;
-const folderW = Math.min(vw * 0.55, 240);
-const folderH = folderW;
-const centerY = vh / 2 - folderH / 2;
-const startX = -folderW - 40;
-const endX   = vw + folderW;
-const scaleVal = 0.72;
-const yOff = 30;
+const TOTAL      = 11;
+const TARGET_IDX = 5;
+const SPEED      = 95;
+const FW         = Math.min(window.innerWidth * 0.38, 160);
+const FH         = FW * 1.1;
+const GAP        = FW * 0.18;
+const STEP       = FW + GAP;
+const stageH     = stage.offsetHeight || Math.min(window.innerWidth * 0.52, 260);
+const TOP        = stageH * 0.08;
 
-function makeFlyer(index) {
+const folders = [];
+
+for (let i = 0; i < TOTAL; i++) {
   const el = document.createElement('div');
   el.className = 'fly-folder';
-  el.style.cssText = `
-    width:${folderW}px;
-    top:${centerY - yOff + Math.sin(index * 1.3) * 18}px;
-    left:${startX}px;
-    transform: scale(${scaleVal}) rotate(${(index % 3 - 1) * 4}deg);
-    opacity:0;
-  `;
+  el.style.cssText = `width:${FW}px; top:${TOP + Math.sin(i * 0.9) * stageH * 0.08}px;`;
   const img = document.createElement('img');
   img.src = 'folder.png';
   el.appendChild(img);
   stage.appendChild(el);
-  return el;
-}
-
-function animateFlyer(el, delay) {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      const dur = STRIP_DURATION;
-      el.style.transition = `left ${dur}ms cubic-bezier(0.25,0.1,0.4,1), opacity 80ms`;
-      el.style.opacity = '1';
-      el.style.left = endX + 'px';
-      setTimeout(() => {
-        el.style.opacity = '0';
-        setTimeout(resolve, 200);
-      }, dur - 200);
-    }, delay);
+  folders.push({
+    el,
+    x: -FW - 60 + i * STEP,
+    vy: (Math.random() - 0.5) * 0.4,
+    rot: (i % 3 - 1) * 5,
+    done: false
   });
 }
 
-async function runIntro() {
-  const promises = [];
-  for (let i = 0; i < FOLDER_COUNT; i++) {
-    const el = makeFlyer(i);
-    promises.push(animateFlyer(el, i * FOLDER_INTERVAL));
+let rafId;
+let targetLanded = false;
+const targetFolder = folders[TARGET_IDX];
+
+function tick() {
+  let allDone = true;
+
+  for (let i = 0; i < folders.length; i++) {
+    const f = folders[i];
+    if (f.done) continue;
+
+    f.x += SPEED;
+
+    const isTarget = (i === TARGET_IDX);
+
+    if (isTarget && !targetLanded) {
+      const centerX = (window.innerWidth - FW) / 2;
+      if (f.x >= centerX) {
+        f.x = centerX;
+        f.done = true;
+        targetLanded = true;
+        triggerLand(f.el);
+        continue;
+      }
+    }
+
+    if (f.x > window.innerWidth + 40) {
+      f.el.style.opacity = '0';
+      f.done = true;
+      continue;
+    }
+
+    allDone = false;
+    const scale = isTarget ? 1 : 0.72;
+    const opacity = isTarget ? 1 : 0.55;
+    f.el.style.transform = `translateX(${f.x}px) scale(${scale}) rotate(${f.rot}deg)`;
+    f.el.style.opacity = opacity;
   }
 
-  const totalDelay = (FOLDER_COUNT - 1) * FOLDER_INTERVAL + STRIP_DURATION;
-
-  setTimeout(() => {
-    stage.innerHTML = '';
-    scene.style.transition = 'none';
-    scene.style.opacity = '0';
-    scene.style.transform = 'scale(0.7) translateY(-30px)';
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        scene.style.transition = 'opacity 0.08s, transform 0.45s cubic-bezier(0.22,1,0.36,1)';
-        scene.style.opacity = '1';
-        scene.style.transform = 'scale(1) translateY(0)';
-
-        shadow.style.transition = 'opacity 0.5s ease';
-        shadow.style.opacity = '0.9';
-
-        setTimeout(() => {
-          scene.style.transition = '';
-          scene.style.transform = '';
-          scene.classList.add('idle-loop');
-          shadow.style.transition = '';
-          shadow.classList.add('idle-loop');
-        }, 500);
-      });
-    });
-  }, totalDelay - 120);
-
-  await Promise.all(promises);
+  if (!allDone || !targetLanded) {
+    rafId = requestAnimationFrame(tick);
+  }
 }
 
-runIntro();
+function triggerLand(flyEl) {
+  setTimeout(() => {
+    flyEl.style.opacity = '0';
+    stage.innerHTML = '';
+
+    scene.classList.add('landed');
+    scene.style.opacity = '1';
+
+    scene.addEventListener('animationend', () => {
+      scene.classList.remove('landed');
+      scene.classList.add('idle-loop');
+      shadow.classList.add('idle-loop');
+      folderText.classList.add('visible');
+    }, { once: true });
+  }, 80);
+}
+
+requestAnimationFrame(tick);
 </script>
 </body>
 </html>
