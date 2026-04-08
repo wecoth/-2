@@ -26,87 +26,65 @@
       radial-gradient(ellipse 70% 55% at 25% 20%, #e2e0db 0%, transparent 60%),
       radial-gradient(ellipse 60% 50% at 78% 80%, #d8d6d1 0%, transparent 55%);
   }
-
-  .fly-stage {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 52vw;
-    max-height: 260px;
-    z-index: 3;
-    pointer-events: none;
-    overflow: hidden;
-  }
-
-  .fly-folder {
-    position: absolute;
-    will-change: transform, opacity;
-  }
-  .fly-folder img {
-    width: 100%;
-    display: block;
-    filter: drop-shadow(0 8px 16px rgba(0,0,0,0.22));
-  }
-
   .scene {
     position: relative;
     z-index: 2;
     width: min(94vw, 440px);
     margin-top: 0;
     transform-origin: center bottom;
-    opacity: 0;
   }
-  .scene.landed {
-    animation: landBounce 0.5s cubic-bezier(0.22,1,0.36,1) both;
-  }
-  .scene.idle-loop {
-    opacity: 1;
-    animation: folderIdle 3.6s ease-in-out infinite;
-  }
+  .scene.float-in  { animation: floatIn   2.2s linear both; }
+  .scene.idle-loop { animation: folderIdle 3.6s ease-in-out infinite; }
 
   .folder-shadow {
-    width: 60%; height: 20px;
+    width: 60%;
+    height: 20px;
     margin: -22px auto 0;
     background: radial-gradient(ellipse 100% 100% at 50% 50%, rgba(0,0,0,0.28) 0%, transparent 70%);
     transform-origin: center center;
-    opacity: 0;
   }
-  .folder-shadow.idle-loop {
-    opacity: 0.9;
-    animation: shadowIdle 3.6s ease-in-out infinite;
-  }
+  .folder-shadow.shadow-in  { animation: shadowIn   2.2s ease-out both; }
+  .folder-shadow.idle-loop  { animation: shadowIdle  3.6s ease-in-out infinite; }
 
   .folder-img {
-    width: 100%; display: block;
+    width: 100%;
+    display: block;
     filter: drop-shadow(0 24px 48px rgba(0,0,0,0.28)) drop-shadow(0 6px 12px rgba(0,0,0,0.16));
   }
   .folder-text {
     position: absolute;
-    top: 48%; bottom: 18%;
+    top: 48%;
+    bottom: 18%;
     left: 10%; right: 10%;
     z-index: 3;
-    display: flex; flex-direction: column;
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    opacity: 0;
-    transition: opacity 0.3s ease 0.2s;
   }
-  .folder-text.visible { opacity: 1; }
-
   .f-address {
     font-size: clamp(16px, 4.6vw, 22px);
-    font-weight: 400; color: rgba(255,255,255,0.88);
-    line-height: 1.28; letter-spacing: -0.2px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.88);
+    line-height: 1.28;
+    letter-spacing: -0.2px;
   }
-  .f-bottom { display: flex; flex-direction: column; padding-left: 4%; }
+  .f-bottom {
+    display: flex;
+    flex-direction: column;
+    padding-left: 4%;
+  }
   .f-total-row { display: flex; align-items: baseline; gap: 6px; }
   .f-amount {
     font-size: clamp(28px, 8vw, 40px);
-    font-weight: 300; color: rgba(255,255,255,0.94);
+    font-weight: 300;
+    color: rgba(255,255,255,0.94);
     letter-spacing: -1px; line-height: 1;
   }
   .f-currency {
     font-family: 'Raleway', sans-serif;
     font-size: clamp(28px, 8vw, 40px);
-    font-weight: 200; color: rgba(255,255,255,0.94);
+    font-weight: 200;
+    color: rgba(255,255,255,0.94);
     vertical-align: 0.05em;
   }
   .f-total-label {
@@ -115,30 +93,40 @@
     color: rgba(255,255,255,0.42); margin-top: 4px;
   }
 
-  @keyframes landBounce {
-    0%   { opacity: 0; transform: scale(0.75) translateY(-40px); }
-    55%  { opacity: 1; transform: scale(1.05) translateY(6px); }
-    78%  { transform: scale(0.97) translateY(-3px); }
-    100% { opacity: 1; transform: scale(1) translateY(0); }
+  @keyframes floatIn {
+    0%   { opacity: 0;   transform: scale(0.07) translate(-320px, -280px) rotate(-15deg); }
+    10%  { opacity: 1;   transform: scale(0.12) translate(-220px, -200px) rotate(-10deg); }
+    20%  {               transform: scale(0.20) translate(-130px, -130px) rotate(-6deg);  }
+    30%  {               transform: scale(0.30) translate(-40px,  -70px)  rotate(-2deg);  }
+    40%  {               transform: scale(0.42) translate(60px,   -20px)  rotate(2deg);   }
+    50%  {               transform: scale(0.56) translate(100px,   15px)  rotate(3deg);   }
+    60%  {               transform: scale(0.70) translate(80px,    30px)  rotate(2deg);   }
+    70%  {               transform: scale(0.82) translate(45px,    22px)  rotate(1deg);   }
+    80%  {               transform: scale(0.92) translate(18px,    10px)  rotate(0.4deg); }
+    90%  {               transform: scale(1.04) translate(4px,     4px)   rotate(0deg);   }
+    95%  {               transform: scale(0.98) translate(0px,     0px)   rotate(0deg);   }
+    100% { opacity: 1;   transform: scale(1)    translate(0, 0)           rotate(0deg);   }
   }
   @keyframes folderIdle {
     0%, 100% { transform: translate3d(0,0,0) scale(1) rotate(0deg); }
     50%       { transform: translate3d(0,-10px,0) scale(0.985) rotate(-0.25deg); }
   }
+  @keyframes shadowIn {
+    0%, 30% { opacity: 0;   transform: scale(0.1, 0.1); filter: blur(2px); }
+    100%    { opacity: 0.9; transform: scale(1.08, 1);  filter: blur(6px); }
+  }
   @keyframes shadowIdle {
-    0%, 100% { opacity: 0.9;  transform: scale(1.08,1);    filter: blur(6px); }
-    50%       { opacity: 0.48; transform: scale(0.82,0.72); filter: blur(8px); }
+    0%, 100% { opacity: 0.9;  transform: scale(1.08, 1);    filter: blur(6px); }
+    50%       { opacity: 0.48; transform: scale(0.82, 0.72); filter: blur(8px); }
   }
 </style>
 </head>
 <body>
 <section class="hero">
-  <div class="fly-stage" id="flyStage"></div>
-
   <div class="scene" id="scene">
     <img class="folder-img" src="folder.png" alt="">
     <div class="folder-shadow" id="folderShadow"></div>
-    <div class="folder-text" id="folderText">
+    <div class="folder-text">
       <p class="f-address">ул. Красная, 176, кв. 34</p>
       <div class="f-bottom">
         <div class="f-total-row">
@@ -152,102 +140,18 @@
 </section>
 
 <script>
-const scene      = document.getElementById('scene');
-const shadow     = document.getElementById('folderShadow');
-const folderText = document.getElementById('folderText');
-const stage      = document.getElementById('flyStage');
+  const scene  = document.getElementById('scene');
+  const shadow = document.getElementById('folderShadow');
 
-const TOTAL      = 11;
-const TARGET_IDX = 5;
-const SPEED      = 28;
-const FW         = Math.min(window.innerWidth * 0.38, 160);
-const FH         = FW * 1.1;
-const GAP        = FW * 0.18;
-const STEP       = FW + GAP;
-const stageH     = stage.offsetHeight || Math.min(window.innerWidth * 0.52, 260);
-const TOP        = stageH * 0.08;
+  scene.classList.add('float-in');
+  shadow.classList.add('shadow-in');
 
-const folders = [];
-
-for (let i = 0; i < TOTAL; i++) {
-  const el = document.createElement('div');
-  el.className = 'fly-folder';
-  el.style.cssText = `width:${FW}px; top:${TOP + Math.sin(i * 0.9) * stageH * 0.08}px;`;
-  const img = document.createElement('img');
-  img.src = 'folder.png';
-  el.appendChild(img);
-  stage.appendChild(el);
-  folders.push({
-    el,
-    x: -FW - 60 + i * STEP,
-    vy: (Math.random() - 0.5) * 0.4,
-    rot: (i % 3 - 1) * 5,
-    done: false
-  });
-}
-
-let rafId;
-let targetLanded = false;
-const targetFolder = folders[TARGET_IDX];
-
-function tick() {
-  let allDone = true;
-
-  for (let i = 0; i < folders.length; i++) {
-    const f = folders[i];
-    if (f.done) continue;
-
-    f.x += SPEED;
-
-    const isTarget = (i === TARGET_IDX);
-
-    if (isTarget && !targetLanded) {
-      const centerX = (window.innerWidth - FW) / 2;
-      if (f.x >= centerX) {
-        f.x = centerX;
-        f.done = true;
-        targetLanded = true;
-        triggerLand(f.el);
-        continue;
-      }
-    }
-
-    if (f.x > window.innerWidth + 40) {
-      f.el.style.opacity = '0';
-      f.done = true;
-      continue;
-    }
-
-    allDone = false;
-    const scale = isTarget ? 1 : 0.72;
-    const opacity = isTarget ? 1 : 0.55;
-    f.el.style.transform = `translateX(${f.x}px) scale(${scale}) rotate(${f.rot}deg)`;
-    f.el.style.opacity = opacity;
-  }
-
-  if (!allDone || !targetLanded) {
-    rafId = requestAnimationFrame(tick);
-  }
-}
-
-function triggerLand(flyEl) {
-  setTimeout(() => {
-    flyEl.style.opacity = '0';
-    stage.innerHTML = '';
-
-    scene.classList.add('landed');
-    scene.style.opacity = '1';
-
-    scene.addEventListener('animationend', () => {
-      scene.classList.remove('landed');
-      scene.classList.add('idle-loop');
-      shadow.classList.add('idle-loop');
-      folderText.classList.add('visible');
-    }, { once: true });
-  }, 80);
-}
-
-requestAnimationFrame(tick);
+  scene.addEventListener('animationend', () => {
+    scene.classList.remove('float-in');
+    scene.classList.add('idle-loop');
+    shadow.classList.remove('shadow-in');
+    shadow.classList.add('idle-loop');
+  }, { once: true });
 </script>
 </body>
 </html>
