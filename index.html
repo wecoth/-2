@@ -458,16 +458,19 @@
 
 </style>
 </head>
+
 <body>
+
+<!-- HERO: адрес + итоговая стоимость -->
 <section class="hero">
   <div class="scene" id="scene">
     <img class="folder-img" id="folderImg" src="folder.png" alt="">
     <div class="folder-shadow" id="folderShadow"></div>
     <div class="folder-text">
-      <p class="f-address">ул. Красная, 176, кв. 34</p>
+      <p class="f-address" data-bind="address">—</p>
       <div class="f-bottom">
         <div class="f-total-row">
-          <span class="f-amount">187 929</span>
+          <span class="f-amount" data-bind="total_amount_formatted">—</span>
           <span class="f-currency">₽</span>
         </div>
         <p class="f-total-label">Итоговая стоимость</p>
@@ -475,69 +478,51 @@
     </div>
   </div>
 </section>
+
+<!-- ТАЙМЛАЙН -->
 <section class="timeline-section">
   <div class="timeline-inner">
     <div class="tl-wrap">
       <div class="tl-header">
         <span class="tl-title">Срок выполнения</span>
-        <span class="tl-days">10 <span>раб. дней</span></span>
+        <span class="tl-days"><span data-bind="duration_days">—</span> <span>раб. дней</span></span>
       </div>
-      <div class="tl-names">
-        <span class="tl-name">Подготовка</span>
-        <span class="tl-name">Перегородка</span>
-        <span class="tl-name">Шпаклёвка</span>
-        <span class="tl-name">Окраска</span>
-        <span class="tl-name">Финиш</span>
-      </div>
+      <div class="tl-names" id="tlNames"></div>
       <div class="tl-track"><div class="tl-fill" id="tlFill"></div></div>
-      <div class="tl-dots">
-        <div class="tl-dot-wrap"><div class="tl-dot done"></div><div class="tl-day">День 1</div></div>
-        <div class="tl-dot-wrap"><div class="tl-dot done"></div><div class="tl-day">День 3</div></div>
-        <div class="tl-dot-wrap"><div class="tl-dot done"></div><div class="tl-day">День 5</div></div>
-        <div class="tl-dot-wrap"><div class="tl-dot"></div><div class="tl-day">День 8</div></div>
-        <div class="tl-dot-wrap"><div class="tl-dot"></div><div class="tl-day">День 10</div></div>
-      </div>
+      <div class="tl-dots" id="tlDots"></div>
     </div>
   </div>
 </section>
+
+<!-- ПЛОЩАДИ + ПОМЕЩЕНИЯ -->
 <section class="rooms-section">
   <div class="rooms-inner">
-
     <div class="totals">
       <div class="total-cell">
-        <div class="total-num">78<span class="total-unit"> м²</span></div>
+        <div class="total-num"><span data-bind="area_floor">—</span><span class="total-unit"> м²</span></div>
         <div class="total-desc">площадь пола</div>
       </div>
       <div class="total-cell">
-        <div class="total-num">207<span class="total-unit"> м²</span></div>
+        <div class="total-num"><span data-bind="area_walls">—</span><span class="total-unit"> м²</span></div>
         <div class="total-desc">площадь стен</div>
       </div>
       <div class="total-cell">
-        <div class="total-num">75<span class="total-unit"> м/п</span></div>
+        <div class="total-num"><span data-bind="area_perimeter">—</span><span class="total-unit"> м/п</span></div>
         <div class="total-desc">периметр</div>
       </div>
     </div>
-
     <div class="rooms-cols" id="roomsCols"></div>
   </div>
 </section>
 
-
+<!-- КАК БУДЕТ ПРОХОДИТЬ РЕМОНТ -->
 <section class="about">
   <div class="about-inner">
     <h2 class="about-title">Как будет проходить ремонт</h2>
     <div class="about-body">
-      <div class="about-preview">
-        <p>Работы начинаются с защиты готовых поверхностей — напольное покрытие, плинтус и периметр потолка оклеиваются плёнкой ПВХ. Это гарантирует, что всё существующее не пострадает от пыли и механических повреждений в ходе работ. Параллельно снимаем наличники с межкомнатных дверей — они мешают</p>
-      </div>
-      <div class="about-more" id="aboutMore">
-        <p>работе и будут установлены заново в финале.</p>
-        <p>Параллельно снимаем наличники с межкомнатных дверей — они мешают работе и будут установлены заново в финале.</p>
-        <p>Затем переходим к основным конструктивным работам: возводим перегородку из двух слоёв ГКЛ с уплотнительной лентой по периметру. После этого перегородка грунтуется, армируются все стыки листов, трещины заполняются шпаклёвочной смесью — только после этого начинается финишная подготовка поверхностей.</p>
-        <p>Шпаклёвка наносится в два прохода: сначала базовый слой с промежуточным ошкуриванием, затем финишный — под покраску. Каждый слой шкурится отдельно. Это самый трудоёмкий этап, от которого напрямую зависит качество финальной окраски.</p>
-        <p>Завершают работы окраска потолка и стен водоэмульсионной краской в два слоя — 207 м² стен и все потолочные поверхности. В финале устанавливаются наличники на место.</p>
-      </div>
-      <button class="about-toggle" id="aboutToggle" onclick="toggleAbout()">
+      <div class="about-preview" id="aboutPreview"></div>
+      <div class="about-more" id="aboutMore"></div>
+      <button class="about-toggle" id="aboutToggle" onclick="toggleAbout()" style="display:none">
         <span id="aboutToggleText">Читать полностью</span>
         <svg id="aboutToggleIcon" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="transition:transform 0.3s ease;flex-shrink:0">
           <path d="M2 5L7 10L12 5" stroke="#a09e99" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -546,291 +531,81 @@
     </div>
   </div>
 </section>
+
+<!-- ПЕРЕЧЕНЬ РАБОТ -->
 <section class="smeta">
   <div class="smeta-inner">
     <h2 class="about-title">Перечень работ</h2>
-
-    <div class="smeta-group">
-      <div class="smeta-group-title">Подготовительные работы</div>
-
-      <div class="smeta-item">
-        <div class="smeta-row" onclick="toggleItem(this)">
-          <span class="smeta-num">1</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Демонтаж наличников межкомнатных дверей</span><div class="smeta-volume">40 м/п × 50 ₽</div></span>
-          <span class="smeta-price">2 000 ₽</span>
-          <span class="smeta-arrow">Для чего?</span>
-        </div>
-        <div class="smeta-detail">Наличники снимаются в самом начале — до любых отделочных работ. Иначе невозможно нормально подготовить откосы, прошпаклевать и прокрасить стены у дверных проёмов вплотную. В финале встанут обратно уже поверх чистовой отделки.</div>
-      </div>
-
-      <div class="smeta-item">
-        <div class="smeta-row" onclick="toggleItem(this)">
-          <span class="smeta-num">2</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Оклейка напольного покрытия плёнкой ПВХ</span><div class="smeta-volume">78,2 м/п × 100 ₽</div></span>
-          <span class="smeta-price">7 820 ₽</span>
-          <span class="smeta-arrow">Для чего?</span>
-        </div>
-        <div class="smeta-detail">Весь пол оклеивается до старта любых работ. Шпаклёвка, грунт, краска — всё это оседает на пол и въедается намертво. Плёнка защищает существующее покрытие на всё время ремонта.</div>
-      </div>
-
-      <div class="smeta-item">
-        <div class="smeta-row" onclick="toggleItem(this)">
-          <span class="smeta-num">3</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Оклейка напольного плинтуса</span><div class="smeta-volume">74,96 м/п × 75 ₽</div></span>
-          <span class="smeta-price">5 622 ₽</span>
-          <span class="smeta-arrow">Для чего?</span>
-        </div>
-        <div class="smeta-detail">Плинтус — самое уязвимое место: краска и шпаклёвка затекают под него и в стыки. Оклейка исключает загрязнение и сохраняет внешний вид без трудоёмкой очистки после.</div>
-      </div>
-
-      <div class="smeta-item">
-        <div class="smeta-row" onclick="toggleItem(this)">
-          <span class="smeta-num">4</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Оклейка периметра дверей (тамбур, входная)</span><div class="smeta-volume">9,9 м/п × 100 ₽</div></span>
-          <span class="smeta-price">990 ₽</span>
-          <span class="smeta-arrow">Для чего?</span>
-        </div>
-        <div class="smeta-detail">Дверные коробки входной двери и тамбура не меняются — их нужно защитить от попадания краски и раствора. Оклейка периметра исключает загрязнение фурнитуры и покрытия дверей.</div>
-      </div>
-
-      <div class="smeta-item">
-        <div class="smeta-row" onclick="toggleItem(this)">
-          <span class="smeta-num">5</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Оклейка периметра потолка</span><div class="smeta-volume">74,96 м/п × 100 ₽</div></span>
-          <span class="smeta-price">7 496 ₽</span>
-          <span class="smeta-arrow">Для чего?</span>
-        </div>
-        <div class="smeta-detail">Потолок уже готов и не окрашивается заново. При окраске стен валиком брызги неизбежно попадают вверх — оклейка периметра защищает стык потолка со стеной и исключает необходимость его перекраски.</div>
-      </div>
-    </div>
-
-    <div class="smeta-group">
-      <div class="smeta-group-title">Возведение перегородки</div>
-
-      <div class="smeta-item">
-        <div class="smeta-row" onclick="toggleItem(this)">
-          <span class="smeta-num">6</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Возведение перегородки из ГКЛ в 2 слоя</span><div class="smeta-volume">3,15 м² × 2 900 ₽</div></span>
-          <span class="smeta-price">9 135 ₽</span>
-          <span class="smeta-arrow">Для чего?</span>
-        </div>
-        <div class="smeta-detail">Два слоя ГКЛ — это жёсткость и звукоизоляция. Один слой даёт тонкую мягкую конструкцию, которая гнётся и плохо держит нагрузку. Два слоя в разбежку швов — полноценная стена.</div>
-      </div>
-
-      <div class="smeta-item">
-        <div class="smeta-row" onclick="toggleItem(this)">
-          <span class="smeta-num">7</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Оклейка направляющих профилей уплотнительной лентой</span><div class="smeta-volume">8 м/п × 50 ₽</div></span>
-          <span class="smeta-price">400 ₽</span>
-          <span class="smeta-arrow">Для чего?</span>
-        </div>
-        <div class="smeta-detail">Лента клеится на профиль до его крепления к потолку и полу. Она гасит вибрацию и структурный шум — без неё любой удар по полу или потолку передаётся в перегородку. Также исключает трещины по периметру при усадке здания.</div>
-      </div>
-
-      <div class="smeta-item">
-        <div class="smeta-row" onclick="toggleItem(this)">
-          <span class="smeta-num">8</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Армирование стыков листов ГКЛ</span><div class="smeta-volume">13,2 м/п × 350 ₽</div></span>
-          <span class="smeta-price">4 620 ₽</span>
-          <span class="smeta-arrow">Для чего?</span>
-        </div>
-        <div class="smeta-detail">Стыки между листами — слабое место перегородки. Без армирующей сетки шпаклёвка в этих местах трескается через полгода-год из-за микродвижений конструкции. Серпянка вклеивается в первый слой шпаклёвки и держит шов навсегда.</div>
-      </div>
-    </div>
-
-    <div class="smeta-group">
-      <div class="smeta-group-title">Подготовка поверхностей</div>
-
-      <div class="smeta-item">
-        <div class="smeta-row" onclick="toggleItem(this)">
-          <span class="smeta-num">9</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Грунтование поверхности перегородки из ГКЛ</span><div class="smeta-volume">9,5 м² × 120 ₽</div></span>
-          <span class="smeta-price">1 140 ₽</span>
-          <span class="smeta-arrow">Для чего?</span>
-        </div>
-        <div class="smeta-detail">ГКЛ — пористый материал, он моментально впитывает влагу из шпаклёвки. Без грунта шпаклёвка сохнет неравномерно, теряет прочность и трескается. Грунт выравнивает впитываемость и обеспечивает сцепление.</div>
-      </div>
-
-      <div class="smeta-item">
-        <div class="smeta-row" onclick="toggleItem(this)">
-          <span class="smeta-num">10</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Нанесение базового слоя шпаклёвки</span><div class="smeta-volume">9,5 м² × 1 250 ₽</div></span>
-          <span class="smeta-price">11 875 ₽</span>
-          <span class="smeta-arrow">Для чего?</span>
-        </div>
-        <div class="smeta-detail">Базовый слой выравнивает плоскость перегородки и скрывает армирование стыков. Наносится толще финишного — он несёт основную нагрузку по геометрии. Без него финишный слой ляжет на неровную поверхность и это будет видно под краской.</div>
-      </div>
-
-      <div class="smeta-item">
-        <div class="smeta-row" onclick="toggleItem(this)">
-          <span class="smeta-num">11</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Ошкуривание базового слоя шпаклёвки</span><div class="smeta-volume">9,5 м² × 550 ₽</div></span>
-          <span class="smeta-price">5 225 ₽</span>
-          <span class="smeta-arrow">Для чего?</span>
-        </div>
-        <div class="smeta-detail">После высыхания базовый слой шкурится — убираются следы шпателя, наплывы и переходы. Если этого не сделать, финишный слой повторит все неровности базового и результат будет виден на готовой стене в косом свете.</div>
-      </div>
-
-      <div class="smeta-item">
-        <div class="smeta-row" onclick="toggleItem(this)">
-          <span class="smeta-num">12</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Грунтование перегородки перед финишем</span><div class="smeta-volume">9,5 м² × 120 ₽</div></span>
-          <span class="smeta-price">1 140 ₽</span>
-          <span class="smeta-arrow">Для чего?</span>
-        </div>
-        <div class="smeta-detail">Второй слой грунта — перед финишной шпаклёвкой. После ошкуривания поверхность снова становится пористой и пыльной. Грунт связывает пыль и восстанавливает сцепление — без него финишный слой может отслоиться.</div>
-      </div>
-
-      <div class="smeta-item">
-        <div class="smeta-row" onclick="toggleItem(this)">
-          <span class="smeta-num">13</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Заполнение трещин шпаклёвочной смесью</span><div class="smeta-volume">6 усл. ед. × 750 ₽</div></span>
-          <span class="smeta-price">4 500 ₽</span>
-          <span class="smeta-arrow">Для чего?</span>
-        </div>
-        <div class="smeta-detail">В существующих стенах и потолке есть трещины — от усадки здания и предыдущего ремонта. Если их не заполнить до финишной отделки, они проявятся сквозь краску. Заполняются эластичной смесью, которая не трескается при микродвижениях.</div>
-      </div>
-
-      <div class="smeta-item">
-        <div class="smeta-row" onclick="toggleItem(this)">
-          <span class="smeta-num">14</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Нанесение финишного слоя шпаклёвки</span><div class="smeta-volume">9,5 м² × 1 250 ₽</div></span>
-          <span class="smeta-price">11 875 ₽</span>
-          <span class="smeta-arrow">Для чего?</span>
-        </div>
-        <div class="smeta-detail">Финишный слой — тонкий, до 1 мм. Его задача не выравнивание, а создание идеально гладкой поверхности под покраску. Наносится только после полной подготовки базы — на плохую основу финиш не даст результата.</div>
-      </div>
-
-      <div class="smeta-item">
-        <div class="smeta-row" onclick="toggleItem(this)">
-          <span class="smeta-num">15</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Ошкуривание финишного слоя шпаклёвки</span><div class="smeta-volume">9,5 м² × 550 ₽</div></span>
-          <span class="smeta-price">5 225 ₽</span>
-          <span class="smeta-arrow">Для чего?</span>
-        </div>
-        <div class="smeta-detail">Финишный слой шкурится мелкозернистой бумагой до зеркальной гладкости. Это последний шанс убрать любые дефекты перед краской. После покраски исправить что-либо можно только со вскрытием стены.</div>
-      </div>
-    </div>
-
-    <div class="smeta-group">
-      <div class="smeta-group-title">Финишная отделка</div>
-
-      <div class="smeta-item">
-        <div class="smeta-row" onclick="toggleItem(this)">
-          <span class="smeta-num">16</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Окраска потолка водоэмульсионной краской в 2 слоя</span><div class="smeta-volume">6 м/п × 750 ₽</div></span>
-          <span class="smeta-price">4 500 ₽</span>
-          <span class="smeta-arrow">Для чего?</span>
-        </div>
-        <div class="smeta-detail">Потолок красится первым — капли краски неизбежно падают вниз. Если красить стены раньше потолка, их придётся перекрашивать. Два слоя обязательны: первый выявляет пропуски и тон, второй даёт равномерное покрытие.</div>
-      </div>
-
-      <div class="smeta-item">
-        <div class="smeta-row" onclick="toggleItem(this)">
-          <span class="smeta-num">17</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Окраска стен водоэмульсионной краской в 2 слоя</span><div class="smeta-volume">206,87 м² × 490 ₽</div></span>
-          <span class="smeta-price">101 366 ₽</span>
-          <span class="smeta-arrow">Для чего?</span>
-        </div>
-        <div class="smeta-detail">Стены красятся после потолка. 206 м² — это весь объём помещений. Два слоя дают укрывистость без просветов и защиту поверхности. Первый слой впитывается и показывает реальный цвет, второй закрепляет результат.</div>
-      </div>
-
-      <div class="smeta-item">
-        <div class="smeta-row" onclick="toggleItem(this)">
-          <span class="smeta-num">18</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Монтаж наличников межкомнатных дверей</span><div class="smeta-volume">40 м/п × 75 ₽</div></span>
-          <span class="smeta-price">3 000 ₽</span>
-          <span class="smeta-arrow">Для чего?</span>
-        </div>
-        <div class="smeta-detail">Наличники устанавливаются самыми последними — после полного высыхания краски. Так они закрывают все стыки стены с дверной коробкой уже поверх чистовой отделки, без щелей и подрезов.</div>
-      </div>
-    </div>
-
+    <div id="smetaGroups"></div>
     <div class="smeta-total">
       <span class="smeta-total-label">Итого</span>
-      <span class="smeta-total-amount">187 929 ₽</span>
+      <span class="smeta-total-amount" data-bind="total_amount_full">—</span>
     </div>
-
   </div>
 </section>
+
+<!-- ЧТО НЕ ВХОДИТ -->
 <section class="exclusions-section">
   <div class="exclusions-inner">
     <p class="about-label">Что не входит в смету</p>
-    <div class="exclusions-list">
-      <div class="exclusion-row">
-        <div class="exclusion-icon"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7H12" stroke="#c8c5c0" stroke-width="1.2" stroke-linecap="round"/></svg></div>
-        <span class="exclusion-text">Вывоз строительного мусора</span>
-        <span class="exclusion-note">оговаривается отдельно</span>
-      </div>
-      <div class="exclusion-row">
-        <div class="exclusion-icon"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7H12" stroke="#c8c5c0" stroke-width="1.2" stroke-linecap="round"/></svg></div>
-        <span class="exclusion-text">Материалы и расходники</span>
-        <span class="exclusion-note">по отдельному счёту</span>
-      </div>
-      <div class="exclusion-row">
-        <div class="exclusion-icon"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7H12" stroke="#c8c5c0" stroke-width="1.2" stroke-linecap="round"/></svg></div>
-        <span class="exclusion-text">Проектная документация</span>
-        <span class="exclusion-note">если потребуется</span>
-      </div>
-      <div class="exclusion-row">
-        <div class="exclusion-icon"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7H12" stroke="#c8c5c0" stroke-width="1.2" stroke-linecap="round"/></svg></div>
-        <span class="exclusion-text">Работы вне согласованного объёма</span>
-        <span class="exclusion-note">доп. соглашение</span>
-      </div>
-    </div>
+    <div class="exclusions-list" id="exclusionsList"></div>
   </div>
 </section>
+
+<!-- ИСПОЛНИТЕЛЬ -->
 <section class="contractor-section">
   <div class="contractor-inner">
     <p class="about-label">Исполнитель</p>
     <div class="contractor-card">
       <div class="contractor-top">
-        <div class="contractor-avatar">СК</div>
+        <div class="contractor-avatar" data-bind="contractor_initials">—</div>
         <div>
-          <div class="contractor-name">СтройКомфорт</div>
-          <div class="contractor-role">Подрядчик отделочных работ · Краснодар</div>
+          <div class="contractor-name" data-bind="contractor_name">—</div>
+          <div class="contractor-role" data-bind="contractor_role">—</div>
         </div>
       </div>
       <div class="contractor-rows">
         <div class="contractor-row">
           <span class="contractor-row-label">ИНН</span>
-          <span class="contractor-row-val">2308191234</span>
+          <span class="contractor-row-val" data-bind="contractor_inn">—</span>
         </div>
         <div class="contractor-row">
           <span class="contractor-row-label">ОГРН</span>
-          <span class="contractor-row-val">1232300012345</span>
+          <span class="contractor-row-val" data-bind="contractor_ogrn">—</span>
         </div>
         <div class="contractor-row">
           <span class="contractor-row-label">Менеджер проекта</span>
-          <span class="contractor-row-val">Мария Соколова</span>
+          <span class="contractor-row-val" data-bind="contractor_manager">—</span>
         </div>
         <div class="contractor-row">
           <span class="contractor-row-label">Телефон</span>
-          <span class="contractor-row-val">+7 (918) 123-45-67</span>
+          <span class="contractor-row-val" data-bind="contractor_phone">—</span>
         </div>
       </div>
     </div>
     <div class="guarantee-card">
       <div>
         <div class="guarantee-label">Гарантия</div>
-        <div class="guarantee-val">2 года</div>
+        <div class="guarantee-val" data-bind="guarantee">—</div>
       </div>
       <div class="guarantee-desc">На все виды<br>выполненных работ</div>
     </div>
   </div>
 </section>
+
+<!-- CTA -->
 <section class="cta-section">
   <div class="cta-inner">
     <div class="cta-card">
       <div>
         <div class="cta-title">Готовы приступить?</div>
-        <div class="cta-sub">Цены актуальны до 30 мая 2025 года</div>
+        <div class="cta-sub">Цены актуальны до <span data-bind="valid_until_human">—</span></div>
       </div>
       <div class="cta-buttons">
-        <button class="cta-btn-primary" onclick="window.location='tel:+79181234567'">Позвонить менеджеру</button>
-        <button class="cta-btn-secondary" onclick="window.location='https://wa.me/79181234567'">Написать в Telegram</button>
+        <button class="cta-btn-primary" id="ctaCallBtn">Позвонить менеджеру</button>
+        <button class="cta-btn-secondary" id="ctaTgBtn">Написать в Telegram</button>
       </div>
-      <div class="cta-validity">Смета сформирована 09.04.2025 · Действует 30 дней</div>
+      <div class="cta-validity">Смета сформирована <span data-bind="created_at_human">—</span> · Действует 30 дней</div>
     </div>
   </div>
 </section>
@@ -841,107 +616,369 @@
   <div class="preloader-dot"></div>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- ЭКРАН ОШИБКИ -->
+<div id="errorScreen" style="display:none;position:fixed;inset:0;background:#f0efec;z-index:200;align-items:center;justify-content:center;padding:32px;text-align:center;font-family:'Advent Pro',sans-serif;">
+  <div style="max-width:340px">
+    <div style="font-size:11px;letter-spacing:1.8px;text-transform:uppercase;color:#a09e99;margin-bottom:20px">Смета не найдена</div>
+    <div style="font-size:18px;font-weight:300;color:#2a2926;line-height:1.4" id="errorText">Возможно, ссылка устарела или была введена с ошибкой.</div>
+  </div>
+</div>
 
 <script>
-  const preloader = document.getElementById('preloader');
-  const folderImg = document.getElementById('folderImg');
-  const scene     = document.getElementById('scene');
-  const shadow    = document.getElementById('folderShadow');
+/* ============================================================
+   КОНФИГУРАЦИЯ
+   ============================================================ */
+const CONFIG = {
+  // ID гугл-таблицы с базой смет (Render_DB)
+  RENDER_DB_SHEET_ID: '18MRDCyshTZw3iPRFE3TTaYjEM3S2W7As-MqmVZ_0XBk',
+  RENDER_DB_GID: '0',
+  // ID гугл-таблицы с контрагентами (может быть тот же файл, другой gid)
+  CONTRACTORS_SHEET_ID: '18MRDCyshTZw3iPRFE3TTaYjEM3S2W7As-MqmVZ_0XBk',
+  CONTRACTORS_GID: '1'
+};
 
-  function startScene() {
-    preloader.classList.add('hidden');
-    setTimeout(() => preloader.remove(), 400);
-    scene.classList.add('float-in');
-    shadow.classList.add('shadow-in');
-    scene.addEventListener('animationend', () => {
-      scene.classList.remove('float-in');
-      scene.classList.add('idle-loop');
-      shadow.classList.remove('shadow-in');
-      shadow.classList.add('idle-loop');
-    }, { once: true });
-  }
+/* ============================================================
+   GVIZ ХЕЛПЕРЫ
+   ============================================================ */
+function gvizUrl(sheetId, gid, query) {
+  const q = encodeURIComponent(query);
+  return 'https://docs.google.com/spreadsheets/d/' + sheetId + '/gviz/tq?tqx=out:json&gid=' + gid + '&tq=' + q;
+}
 
-  if (folderImg.complete) {
-    startScene();
-  } else {
-    folderImg.addEventListener('load', startScene);
-    folderImg.addEventListener('error', startScene);
-  }
+function parseGviz(text) {
+  // gviz возвращает: /*O_o*/google.visualization.Query.setResponse({...});
+  const start = text.indexOf('{');
+  const end = text.lastIndexOf('}');
+  if (start === -1 || end === -1) throw new Error('Bad gviz response');
+  return JSON.parse(text.substring(start, end + 1));
+}
 
-  function toggleItem(row) {
-    const item = row.closest('.smeta-item');
-    item.classList.toggle('open');
-  }
-
-
-  (function() {
-    var rooms = [
-      { name: 'Тамбур',    floor: 4.61,  walls: 16.63, perim: 8.64  },
-      { name: 'Холл',      floor: 19.09, walls: 44.81, perim: 12.26 },
-      { name: 'Коридор',   floor: 5.14,  walls: 21.71, perim: 7.14  },
-      { name: 'Комната 1', floor: 13.59, walls: 37.25, perim: 14.28 },
-      { name: 'Комната 2', floor: 18.02, walls: 42.78, perim: 16.06 },
-      { name: 'Комната 3', floor: 17.75, walls: 43.69, perim: 16.58 },
-    ];
-    var cols = document.getElementById('roomsCols');
-    if (!cols) return;
-    rooms.forEach(function(r) {
-      var div = document.createElement('div');
-      div.className = 'room';
-      div.innerHTML =
-        '<div class="room-title">' + r.name + '</div>' +
-        '<div class="room-row"><span class="room-row-label">Пол</span><span class="room-row-val">' + r.floor.toFixed(2) + ' м²</span></div>' +
-        '<div class="room-row"><span class="room-row-label">Стены</span><span class="room-row-val">' + r.walls.toFixed(2) + ' м²</span></div>' +
-        '<div class="room-row"><span class="room-row-label">Периметр</span><span class="room-row-val">' + r.perim.toFixed(2) + ' м/п</span></div>';
-      cols.appendChild(div);
+function rowsFromGviz(parsed) {
+  // Возвращает массив объектов {colLabel: value}
+  const cols = parsed.table.cols.map(function(c) { return c.label || c.id; });
+  return parsed.table.rows.map(function(r) {
+    const obj = {};
+    r.c.forEach(function(cell, i) {
+      obj[cols[i]] = cell ? cell.v : null;
     });
-  })();
+    return obj;
+  });
+}
 
+async function fetchRow(sheetId, gid, whereCol, whereVal) {
+  const query = "select * where " + whereCol + " = '" + whereVal.replace(/'/g, "\'") + "' limit 1";
+  const resp = await fetch(gvizUrl(sheetId, gid, query));
+  if (!resp.ok) throw new Error('HTTP ' + resp.status);
+  const text = await resp.text();
+  const parsed = parseGviz(text);
+  const rows = rowsFromGviz(parsed);
+  return rows[0] || null;
+}
 
-  (function() {
-    var fill = document.getElementById('tlFill');
-    if (!fill) return;
-    var obs = new IntersectionObserver(function(entries) {
-      entries.forEach(function(e) { if (e.isIntersecting) { fill.style.width='60%'; obs.disconnect(); } });
-    }, { threshold: 0.3 });
-    obs.observe(fill);
-  })();
+/* ============================================================
+   БЕЗОПАСНЫЙ ПАРСИНГ JSON-ПОЛЕЙ
+   ============================================================ */
+function safeJson(v, fallback) {
+  if (v == null || v === '') return fallback;
+  try { return JSON.parse(v); } catch (e) { return fallback; }
+}
 
+/* ============================================================
+   РЕНДЕР: общий биндер data-bind
+   ============================================================ */
+function bindFields(data) {
+  document.querySelectorAll('[data-bind]').forEach(function(el) {
+    const key = el.getAttribute('data-bind');
+    if (data[key] != null && data[key] !== '') {
+      el.textContent = data[key];
+    }
+  });
+}
 
-  function toggleAbout() {
-    var more = document.getElementById('aboutMore');
-    var text = document.getElementById('aboutToggleText');
-    var icon = document.getElementById('aboutToggleIcon');
-    var body = more.closest('.about-body');
-    var isOpen = more.classList.toggle('open');
-    body.classList.toggle('expanded', isOpen);
-    text.textContent = isOpen ? 'Свернуть' : 'Читать полностью';
-    icon.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+/* ============================================================
+   РЕНДЕР: помещения
+   ============================================================ */
+function renderRooms(rooms) {
+  const cols = document.getElementById('roomsCols');
+  if (!cols || !rooms) return;
+  cols.innerHTML = '';
+  rooms.forEach(function(r) {
+    const div = document.createElement('div');
+    div.className = 'room';
+    div.innerHTML =
+      '<div class="room-title">' + escapeHtml(r.name) + '</div>' +
+      '<div class="room-row"><span class="room-row-label">Пол</span><span class="room-row-val">' + Number(r.floor).toFixed(2) + ' м²</span></div>' +
+      '<div class="room-row"><span class="room-row-label">Стены</span><span class="room-row-val">' + Number(r.walls).toFixed(2) + ' м²</span></div>' +
+      '<div class="room-row"><span class="room-row-label">Периметр</span><span class="room-row-val">' + Number(r.perim).toFixed(2) + ' м/п</span></div>';
+    cols.appendChild(div);
+  });
+}
+
+/* ============================================================
+   РЕНДЕР: таймлайн этапов
+   ============================================================ */
+function renderStages(stages, totalDays) {
+  const names = document.getElementById('tlNames');
+  const dots = document.getElementById('tlDots');
+  if (!names || !dots || !stages) return;
+  names.innerHTML = '';
+  dots.innerHTML = '';
+  stages.forEach(function(s) {
+    const n = document.createElement('span');
+    n.className = 'tl-name';
+    n.textContent = s.name;
+    names.appendChild(n);
+
+    const wrap = document.createElement('div');
+    wrap.className = 'tl-dot-wrap';
+    wrap.innerHTML =
+      '<div class="tl-dot' + (s.done ? ' done' : '') + '"></div>' +
+      '<div class="tl-day">День ' + s.day + '</div>';
+    dots.appendChild(wrap);
+  });
+
+  // полоса заполнения = доля выполненных этапов
+  const doneCount = stages.filter(function(s) { return s.done; }).length;
+  const pct = stages.length > 0 ? Math.round((doneCount / stages.length) * 100) : 0;
+  setTimeout(function() {
+    const fill = document.getElementById('tlFill');
+    if (fill) fill.style.width = pct + '%';
+  }, 600);
+}
+
+/* ============================================================
+   РЕНДЕР: блок "как будет проходить ремонт"
+   ============================================================ */
+function renderAbout(paragraphs) {
+  const preview = document.getElementById('aboutPreview');
+  const more = document.getElementById('aboutMore');
+  const toggle = document.getElementById('aboutToggle');
+  if (!preview || !more || !paragraphs || paragraphs.length === 0) return;
+
+  preview.innerHTML = '<p>' + escapeHtml(paragraphs[0]) + '</p>';
+  if (paragraphs.length > 1) {
+    more.innerHTML = paragraphs.slice(1).map(function(p) {
+      return '<p>' + escapeHtml(p) + '</p>';
+    }).join('');
+    toggle.style.display = 'inline-flex';
+  }
+}
+
+/* ============================================================
+   РЕНДЕР: группы работ
+   ============================================================ */
+function renderGroups(groups) {
+  const root = document.getElementById('smetaGroups');
+  if (!root || !groups) return;
+  root.innerHTML = '';
+  let globalNum = 0;
+  groups.forEach(function(g) {
+    const groupEl = document.createElement('div');
+    groupEl.className = 'smeta-group';
+    let html = '<div class="smeta-group-title">' + escapeHtml(g.title) + '</div>';
+    g.items.forEach(function(it) {
+      globalNum++;
+      html +=
+        '<div class="smeta-item">' +
+          '<div class="smeta-row" onclick="toggleItem(this)">' +
+            '<span class="smeta-num">' + globalNum + '</span>' +
+            '<span class="smeta-name-wrap">' +
+              '<span class="smeta-name">' + escapeHtml(it.name) + '</span>' +
+              '<div class="smeta-volume">' + escapeHtml(it.volume) + '</div>' +
+            '</span>' +
+            '<span class="smeta-price">' + escapeHtml(it.price) + '</span>' +
+            '<span class="smeta-arrow">Для чего?</span>' +
+          '</div>' +
+          '<div class="smeta-detail">' + escapeHtml(it.detail || '') + '</div>' +
+        '</div>';
+    });
+    groupEl.innerHTML = html;
+    root.appendChild(groupEl);
+  });
+}
+
+/* ============================================================
+   РЕНДЕР: что не входит
+   ============================================================ */
+function renderExclusions(items) {
+  const root = document.getElementById('exclusionsList');
+  if (!root) return;
+  // Дефолтный набор, если в смете не задано
+  const list = (items && items.length > 0) ? items : [
+    { text: 'Вывоз строительного мусора', note: 'оговаривается отдельно' },
+    { text: 'Материалы и расходники',     note: 'по отдельному счёту' },
+    { text: 'Проектная документация',     note: 'если потребуется' },
+    { text: 'Работы вне согласованного объёма', note: 'доп. соглашение' }
+  ];
+  root.innerHTML = '';
+  list.forEach(function(it) {
+    const row = document.createElement('div');
+    row.className = 'exclusion-row';
+    row.innerHTML =
+      '<div class="exclusion-icon"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7H12" stroke="#c8c5c0" stroke-width="1.2" stroke-linecap="round"/></svg></div>' +
+      '<span class="exclusion-text">' + escapeHtml(it.text) + '</span>' +
+      '<span class="exclusion-note">' + escapeHtml(it.note || '') + '</span>';
+    root.appendChild(row);
+  });
+}
+
+/* ============================================================
+   ХЕЛПЕРЫ
+   ============================================================ */
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s).replace(/[&<>"']/g, function(c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+
+function getParam(name) {
+  const m = window.location.search.match(new RegExp('[?&]' + name + '=([^&]*)'));
+  return m ? decodeURIComponent(m[1]) : null;
+}
+
+function showError(msg) {
+  document.getElementById('preloader').style.display = 'none';
+  const screen = document.getElementById('errorScreen');
+  if (msg) document.getElementById('errorText').textContent = msg;
+  screen.style.display = 'flex';
+}
+
+/* ============================================================
+   ОСНОВНАЯ ЗАГРУЗКА
+   ============================================================ */
+async function loadSmeta() {
+  const objectId = getParam('id');
+  if (!objectId) {
+    showError('В ссылке не указан идентификатор сметы.');
+    return;
+  }
+  if (!/^[a-zA-Z0-9_]+$/.test(objectId)) {
+    showError('Некорректный идентификатор сметы.');
+    return;
   }
 
+  let row;
+  try {
+    row = await fetchRow(CONFIG.RENDER_DB_SHEET_ID, CONFIG.RENDER_DB_GID, 'A', objectId);
+  } catch (e) {
+    showError('Не удалось загрузить смету. Проверьте подключение.');
+    return;
+  }
+  if (!row) {
+    showError('Смета по этой ссылке не найдена.');
+    return;
+  }
+
+  // Подтягиваем контрагента отдельным запросом
+  let contractor = null;
+  if (row.contractor_id) {
+    try {
+      contractor = await fetchRow(CONFIG.CONTRACTORS_SHEET_ID, CONFIG.CONTRACTORS_GID, 'A', row.contractor_id);
+    } catch (e) { /* не критично, идём дальше */ }
+  }
+
+  // Готовим плоский data-объект для bindFields
+  const data = {
+    address: row.address || '—',
+    total_amount_formatted: row.total_amount_formatted || '—',
+    total_amount_full: (row.total_amount_formatted || '—') + ' ₽',
+    duration_days: row.duration_days || '—',
+    area_floor: row.area_floor != null ? Math.round(Number(row.area_floor)) : '—',
+    area_walls: row.area_walls != null ? Math.round(Number(row.area_walls)) : '—',
+    area_perimeter: row.area_perimeter != null ? Math.round(Number(row.area_perimeter)) : '—',
+    valid_until_human: row.valid_until_human || row.valid_until || '—',
+    created_at_human: row.created_at_human || row.created_at || '—',
+    guarantee: contractor && contractor.guarantee ? contractor.guarantee : '2 года',
+    contractor_name: contractor ? (contractor.name || '—') : '—',
+    contractor_role: contractor ? (contractor.role || '—') : '—',
+    contractor_inn: contractor ? (contractor.inn || '—') : '—',
+    contractor_ogrn: contractor ? (contractor.ogrn || '—') : '—',
+    contractor_manager: contractor ? (contractor.manager || '—') : '—',
+    contractor_phone: contractor ? (contractor.phone || '—') : '—',
+    contractor_initials: contractor && contractor.name ? makeInitials(contractor.name) : '—'
+  };
+  bindFields(data);
+
+  // Кнопки CTA
+  if (contractor && contractor.phone) {
+    const phoneClean = contractor.phone.replace(/[^+0-9]/g, '');
+    document.getElementById('ctaCallBtn').onclick = function() { window.location = 'tel:' + phoneClean; };
+    if (contractor.telegram) {
+      document.getElementById('ctaTgBtn').onclick = function() { window.location = contractor.telegram; };
+    } else {
+      document.getElementById('ctaTgBtn').onclick = function() { window.location = 'https://wa.me/' + phoneClean.replace('+', ''); };
+    }
+  }
+
+  // Коллекции
+  renderRooms(safeJson(row.rooms_json, []));
+  const stages = safeJson(row.stages_json, []);
+  renderStages(stages, Number(row.duration_days) || 0);
+  renderAbout(safeJson(row.about_text_json, []));
+  renderGroups(safeJson(row.groups_json, []));
+  renderExclusions(safeJson(row.exclusions_json, null));
+
+  // Прячем прелоадер
+  document.title = 'Смета · ' + (row.address || '');
+  startScene();
+}
+
+function makeInitials(name) {
+  const parts = String(name).trim().split(/\s+/);
+  return parts.slice(0, 2).map(function(p) { return p[0] || ''; }).join('').toUpperCase();
+}
+
+/* ============================================================
+   АНИМАЦИИ И UI (как в оригинале)
+   ============================================================ */
+const preloader = document.getElementById('preloader');
+const folderImg = document.getElementById('folderImg');
+const scene     = document.getElementById('scene');
+const shadow    = document.getElementById('folderShadow');
+
+function startScene() {
+  preloader.classList.add('hidden');
+  setTimeout(function() { if (preloader.parentNode) preloader.remove(); }, 400);
+  scene.classList.add('float-in');
+  shadow.classList.add('shadow-in');
+  scene.addEventListener('animationend', function() {
+    scene.classList.remove('float-in');
+    scene.classList.add('idle-loop');
+    shadow.classList.remove('shadow-in');
+    shadow.classList.add('idle-loop');
+  }, { once: true });
+}
+
+function toggleItem(row) {
+  const item = row.closest('.smeta-item');
+  item.classList.toggle('open');
+}
+
+function toggleAbout() {
+  const more = document.getElementById('aboutMore');
+  const text = document.getElementById('aboutToggleText');
+  const icon = document.getElementById('aboutToggleIcon');
+  const body = more.closest('.about-body');
+  const isOpen = more.classList.toggle('open');
+  body.classList.toggle('expanded', isOpen);
+  text.textContent = isOpen ? 'Свернуть' : 'Читать полностью';
+  icon.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+}
+
+// Полоса таймлайна — наблюдатель оставляем на случай если этапы рендерятся до показа
+(function() {
+  const fill = document.getElementById('tlFill');
+  if (!fill) return;
+  const obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) { obs.disconnect(); } });
+  }, { threshold: 0.3 });
+  obs.observe(fill);
+})();
+
+// Старт
+loadSmeta();
 </script>
-
-<!-- СМЕТА -->
-
-
-
-
-
-
-
-
 
 </body>
 </html>
