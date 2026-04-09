@@ -152,6 +152,95 @@
     0%, 100% { opacity: 0.9;  transform: scale(1.08,1);    filter: blur(6px); }
     50%       { opacity: 0.48; transform: scale(0.82,0.72); filter: blur(8px); }
   }
+
+  /* ── СМЕТА ── */
+  .smeta {
+    width: 100%; background: #f0efec;
+    padding: 0 clamp(24px, 8vw, 64px) clamp(48px, 10vw, 88px);
+  }
+  .smeta-inner { max-width: 620px; margin: 0 auto; }
+
+  .smeta-group { margin-bottom: 8px; }
+  .smeta-group-title {
+    font-size: 10px; font-weight: 400;
+    letter-spacing: 1.6px; text-transform: uppercase;
+    color: #a09e99;
+    padding: 24px 0 10px;
+    border-top: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .smeta-item { border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .smeta-row {
+    display: flex; align-items: baseline;
+    gap: 10px; padding: 14px 0;
+    cursor: pointer; user-select: none;
+  }
+  .smeta-row:active { opacity: 0.6; }
+  .smeta-num {
+    font-size: 11px; font-weight: 400;
+    color: #b0ada8; min-width: 18px; flex-shrink: 0;
+  }
+  .smeta-name {
+    font-size: clamp(14px, 3.5vw, 15px); font-weight: 300;
+    color: #2a2926; flex: 1; line-height: 1.4;
+  }
+  .smeta-price {
+    font-size: clamp(13px, 3.2vw, 14px); font-weight: 400;
+    color: #2a2926; white-space: nowrap; flex-shrink: 0;
+  }
+  .smeta-arrow {
+    flex-shrink: 0;
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 10px; font-weight: 400;
+    color: #a09e99; letter-spacing: 0.3px;
+    border: 1px solid rgba(0,0,0,0.10);
+    border-radius: 20px;
+    padding: 3px 8px 3px 6px;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+  .smeta-arrow::before {
+    content: '';
+    display: inline-block;
+    width: 12px; height: 12px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M8 2L9.5 6.5L14 8L9.5 9.5L8 14L6.5 9.5L2 8L6.5 6.5L8 2Z' fill='%23a09e99'/%3E%3C/svg%3E");
+    background-size: contain; background-repeat: no-repeat;
+    transition: background-image 0.2s;
+    flex-shrink: 0;
+  }
+  .smeta-item.open .smeta-arrow {
+    background: rgba(0,0,0,0.04);
+    color: #5a5854;
+    border-color: rgba(0,0,0,0.15);
+  }
+  .smeta-item.open .smeta-arrow::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M8 2L9.5 6.5L14 8L9.5 9.5L8 14L6.5 9.5L2 8L6.5 6.5L8 2Z' fill='%235a5854'/%3E%3C/svg%3E");
+  }
+
+  .smeta-detail {
+    font-size: clamp(13px, 3.2vw, 14px); font-weight: 300;
+    color: #6e6b66; line-height: 1.65;
+    padding: 0 0 16px 28px;
+    display: none;
+  }
+  .smeta-item.open .smeta-detail { display: block; }
+
+  .smeta-total {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 24px 0 0;
+    border-top: 1px solid rgba(0,0,0,0.12);
+    margin-top: 8px;
+  }
+  .smeta-total-label {
+    font-size: 11px; font-weight: 400;
+    letter-spacing: 1.6px; text-transform: uppercase;
+    color: #a09e99;
+  }
+  .smeta-total-amount {
+    font-size: clamp(22px, 5.5vw, 28px); font-weight: 300;
+    color: #2a2926; letter-spacing: -0.5px;
+  }
+
 </style>
 </head>
 <body>
@@ -217,6 +306,223 @@
     folderImg.addEventListener('load', startScene);
     folderImg.addEventListener('error', startScene);
   }
+
+  function toggleItem(row) {
+    const item = row.closest('.smeta-item');
+    item.classList.toggle('open');
+  }
+
 </script>
+
+<!-- СМЕТА -->
+<section class="smeta">
+  <div class="smeta-inner">
+    <p class="about-label">Смета</p>
+    <h2 class="about-title">Перечень работ</h2>
+
+    <div class="smeta-group">
+      <div class="smeta-group-title">Подготовительные работы</div>
+
+      <div class="smeta-item">
+        <div class="smeta-row" onclick="toggleItem(this)">
+          <span class="smeta-num">1</span>
+          <span class="smeta-name">Демонтаж наличников межкомнатных дверей</span>
+          <span class="smeta-price">2 000 ₽</span>
+          <span class="smeta-arrow">Для чего?</span>
+        </div>
+        <div class="smeta-detail">Наличники снимаются в самом начале — до любых отделочных работ. Иначе невозможно нормально подготовить откосы, прошпаклевать и прокрасить стены у дверных проёмов вплотную. В финале встанут обратно уже поверх чистовой отделки.</div>
+      </div>
+
+      <div class="smeta-item">
+        <div class="smeta-row" onclick="toggleItem(this)">
+          <span class="smeta-num">2</span>
+          <span class="smeta-name">Оклейка напольного покрытия плёнкой ПВХ</span>
+          <span class="smeta-price">7 820 ₽</span>
+          <span class="smeta-arrow">Для чего?</span>
+        </div>
+        <div class="smeta-detail">Весь пол оклеивается до старта любых работ. Шпаклёвка, грунт, краска — всё это оседает на пол и въедается намертво. Плёнка защищает существующее покрытие на всё время ремонта.</div>
+      </div>
+
+      <div class="smeta-item">
+        <div class="smeta-row" onclick="toggleItem(this)">
+          <span class="smeta-num">3</span>
+          <span class="smeta-name">Оклейка напольного плинтуса</span>
+          <span class="smeta-price">5 622 ₽</span>
+          <span class="smeta-arrow">Для чего?</span>
+        </div>
+        <div class="smeta-detail">Плинтус — самое уязвимое место: краска и шпаклёвка затекают под него и в стыки. Оклейка исключает загрязнение и сохраняет внешний вид без трудоёмкой очистки после.</div>
+      </div>
+
+      <div class="smeta-item">
+        <div class="smeta-row" onclick="toggleItem(this)">
+          <span class="smeta-num">4</span>
+          <span class="smeta-name">Оклейка периметра дверей (тамбур, входная)</span>
+          <span class="smeta-price">990 ₽</span>
+          <span class="smeta-arrow">Для чего?</span>
+        </div>
+        <div class="smeta-detail">Дверные коробки входной двери и тамбура не меняются — их нужно защитить от попадания краски и раствора. Оклейка периметра исключает загрязнение фурнитуры и покрытия дверей.</div>
+      </div>
+
+      <div class="smeta-item">
+        <div class="smeta-row" onclick="toggleItem(this)">
+          <span class="smeta-num">5</span>
+          <span class="smeta-name">Оклейка периметра потолка</span>
+          <span class="smeta-price">7 496 ₽</span>
+          <span class="smeta-arrow">Для чего?</span>
+        </div>
+        <div class="smeta-detail">Потолок уже готов и не окрашивается заново. При окраске стен валиком брызги неизбежно попадают вверх — оклейка периметра защищает стык потолка со стеной и исключает необходимость его перекраски.</div>
+      </div>
+    </div>
+
+    <div class="smeta-group">
+      <div class="smeta-group-title">Возведение перегородки</div>
+
+      <div class="smeta-item">
+        <div class="smeta-row" onclick="toggleItem(this)">
+          <span class="smeta-num">6</span>
+          <span class="smeta-name">Возведение перегородки из ГКЛ в 2 слоя</span>
+          <span class="smeta-price">9 135 ₽</span>
+          <span class="smeta-arrow">Для чего?</span>
+        </div>
+        <div class="smeta-detail">Два слоя ГКЛ — это жёсткость и звукоизоляция. Один слой даёт тонкую мягкую конструкцию, которая гнётся и плохо держит нагрузку. Два слоя в разбежку швов — полноценная стена.</div>
+      </div>
+
+      <div class="smeta-item">
+        <div class="smeta-row" onclick="toggleItem(this)">
+          <span class="smeta-num">7</span>
+          <span class="smeta-name">Оклейка направляющих профилей уплотнительной лентой</span>
+          <span class="smeta-price">400 ₽</span>
+          <span class="smeta-arrow">Для чего?</span>
+        </div>
+        <div class="smeta-detail">Лента клеится на профиль до его крепления к потолку и полу. Она гасит вибрацию и структурный шум — без неё любой удар по полу или потолку передаётся в перегородку. Также исключает трещины по периметру при усадке здания.</div>
+      </div>
+
+      <div class="smeta-item">
+        <div class="smeta-row" onclick="toggleItem(this)">
+          <span class="smeta-num">8</span>
+          <span class="smeta-name">Армирование стыков листов ГКЛ</span>
+          <span class="smeta-price">4 620 ₽</span>
+          <span class="smeta-arrow">Для чего?</span>
+        </div>
+        <div class="smeta-detail">Стыки между листами — слабое место перегородки. Без армирующей сетки шпаклёвка в этих местах трескается через полгода-год из-за микродвижений конструкции. Серпянка вклеивается в первый слой шпаклёвки и держит шов навсегда.</div>
+      </div>
+    </div>
+
+    <div class="smeta-group">
+      <div class="smeta-group-title">Подготовка поверхностей</div>
+
+      <div class="smeta-item">
+        <div class="smeta-row" onclick="toggleItem(this)">
+          <span class="smeta-num">9</span>
+          <span class="smeta-name">Грунтование поверхности перегородки из ГКЛ</span>
+          <span class="smeta-price">1 140 ₽</span>
+          <span class="smeta-arrow">Для чего?</span>
+        </div>
+        <div class="smeta-detail">ГКЛ — пористый материал, он моментально впитывает влагу из шпаклёвки. Без грунта шпаклёвка сохнет неравномерно, теряет прочность и трескается. Грунт выравнивает впитываемость и обеспечивает сцепление.</div>
+      </div>
+
+      <div class="smeta-item">
+        <div class="smeta-row" onclick="toggleItem(this)">
+          <span class="smeta-num">10</span>
+          <span class="smeta-name">Нанесение базового слоя шпаклёвки</span>
+          <span class="smeta-price">11 875 ₽</span>
+          <span class="smeta-arrow">Для чего?</span>
+        </div>
+        <div class="smeta-detail">Базовый слой выравнивает плоскость перегородки и скрывает армирование стыков. Наносится толще финишного — он несёт основную нагрузку по геометрии. Без него финишный слой ляжет на неровную поверхность и это будет видно под краской.</div>
+      </div>
+
+      <div class="smeta-item">
+        <div class="smeta-row" onclick="toggleItem(this)">
+          <span class="smeta-num">11</span>
+          <span class="smeta-name">Ошкуривание базового слоя шпаклёвки</span>
+          <span class="smeta-price">5 225 ₽</span>
+          <span class="smeta-arrow">Для чего?</span>
+        </div>
+        <div class="smeta-detail">После высыхания базовый слой шкурится — убираются следы шпателя, наплывы и переходы. Если этого не сделать, финишный слой повторит все неровности базового и результат будет виден на готовой стене в косом свете.</div>
+      </div>
+
+      <div class="smeta-item">
+        <div class="smeta-row" onclick="toggleItem(this)">
+          <span class="smeta-num">12</span>
+          <span class="smeta-name">Грунтование перегородки перед финишем</span>
+          <span class="smeta-price">1 140 ₽</span>
+          <span class="smeta-arrow">Для чего?</span>
+        </div>
+        <div class="smeta-detail">Второй слой грунта — перед финишной шпаклёвкой. После ошкуривания поверхность снова становится пористой и пыльной. Грунт связывает пыль и восстанавливает сцепление — без него финишный слой может отслоиться.</div>
+      </div>
+
+      <div class="smeta-item">
+        <div class="smeta-row" onclick="toggleItem(this)">
+          <span class="smeta-num">13</span>
+          <span class="smeta-name">Заполнение трещин шпаклёвочной смесью</span>
+          <span class="smeta-price">4 500 ₽</span>
+          <span class="smeta-arrow">Для чего?</span>
+        </div>
+        <div class="smeta-detail">В существующих стенах и потолке есть трещины — от усадки здания и предыдущего ремонта. Если их не заполнить до финишной отделки, они проявятся сквозь краску. Заполняются эластичной смесью, которая не трескается при микродвижениях.</div>
+      </div>
+
+      <div class="smeta-item">
+        <div class="smeta-row" onclick="toggleItem(this)">
+          <span class="smeta-num">14</span>
+          <span class="smeta-name">Нанесение финишного слоя шпаклёвки</span>
+          <span class="smeta-price">11 875 ₽</span>
+          <span class="smeta-arrow">Для чего?</span>
+        </div>
+        <div class="smeta-detail">Финишный слой — тонкий, до 1 мм. Его задача не выравнивание, а создание идеально гладкой поверхности под покраску. Наносится только после полной подготовки базы — на плохую основу финиш не даст результата.</div>
+      </div>
+
+      <div class="smeta-item">
+        <div class="smeta-row" onclick="toggleItem(this)">
+          <span class="smeta-num">15</span>
+          <span class="smeta-name">Ошкуривание финишного слоя шпаклёвки</span>
+          <span class="smeta-price">5 225 ₽</span>
+          <span class="smeta-arrow">Для чего?</span>
+        </div>
+        <div class="smeta-detail">Финишный слой шкурится мелкозернистой бумагой до зеркальной гладкости. Это последний шанс убрать любые дефекты перед краской. После покраски исправить что-либо можно только со вскрытием стены.</div>
+      </div>
+    </div>
+
+    <div class="smeta-group">
+      <div class="smeta-group-title">Финишная отделка</div>
+
+      <div class="smeta-item">
+        <div class="smeta-row" onclick="toggleItem(this)">
+          <span class="smeta-num">16</span>
+          <span class="smeta-name">Окраска потолка водоэмульсионной краской в 2 слоя</span>
+          <span class="smeta-price">4 500 ₽</span>
+          <span class="smeta-arrow">Для чего?</span>
+        </div>
+        <div class="smeta-detail">Потолок красится первым — капли краски неизбежно падают вниз. Если красить стены раньше потолка, их придётся перекрашивать. Два слоя обязательны: первый выявляет пропуски и тон, второй даёт равномерное покрытие.</div>
+      </div>
+
+      <div class="smeta-item">
+        <div class="smeta-row" onclick="toggleItem(this)">
+          <span class="smeta-num">17</span>
+          <span class="smeta-name">Окраска стен водоэмульсионной краской в 2 слоя</span>
+          <span class="smeta-price">101 366 ₽</span>
+          <span class="smeta-arrow">Для чего?</span>
+        </div>
+        <div class="smeta-detail">Стены красятся после потолка. 206 м² — это весь объём помещений. Два слоя дают укрывистость без просветов и защиту поверхности. Первый слой впитывается и показывает реальный цвет, второй закрепляет результат.</div>
+      </div>
+
+      <div class="smeta-item">
+        <div class="smeta-row" onclick="toggleItem(this)">
+          <span class="smeta-num">18</span>
+          <span class="smeta-name">Монтаж наличников межкомнатных дверей</span>
+          <span class="smeta-price">3 000 ₽</span>
+          <span class="smeta-arrow">Для чего?</span>
+        </div>
+        <div class="smeta-detail">Наличники устанавливаются самыми последними — после полного высыхания краски. Так они закрывают все стыки стены с дверной коробкой уже поверх чистовой отделки, без щелей и подрезов.</div>
+      </div>
+    </div>
+
+    <div class="smeta-total">
+      <span class="smeta-total-label">Итого</span>
+      <span class="smeta-total-amount">187 929 ₽</span>
+    </div>
+
+  </div>
+</section>
+
 </body>
 </html>
