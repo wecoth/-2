@@ -6,12 +6,12 @@
 <title>Смета</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Advent+Pro:wght@300;400;500&family=Raleway:wght@100;200;300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Raleway:wght@100;200;300&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   html, body {
     width: 100%; min-height: 100%;
-    font-family: 'Advent Pro', sans-serif;
+    font-family: 'Jost', sans-serif;
     -webkit-font-smoothing: antialiased;
     background: #f0efec;
   }
@@ -313,7 +313,7 @@
     margin-top: 16px;
     background: none; border: none; padding: 0;
     cursor: pointer;
-    font-family: 'Advent Pro', sans-serif;
+    font-family: 'Jost', sans-serif;
     font-size: 13px; font-weight: 400;
     color: #a09e99; letter-spacing: 0.3px;
   }
@@ -429,7 +429,7 @@
     display: block; text-align: center;
     padding: 14px 20px;
     background: #2a2926; border-radius: 10px;
-    font-family: 'Advent Pro', sans-serif;
+    font-family: 'Jost', sans-serif;
     font-size: 14px; font-weight: 400; color: #f0efec;
     text-decoration: none; letter-spacing: 0.2px;
     border: none; cursor: pointer; width: 100%;
@@ -439,7 +439,7 @@
     padding: 13px 20px;
     background: transparent;
     border: 1px solid rgba(0,0,0,0.12); border-radius: 10px;
-    font-family: 'Advent Pro', sans-serif;
+    font-family: 'Jost', sans-serif;
     font-size: 14px; font-weight: 400; color: #2a2926;
     text-decoration: none; letter-spacing: 0.2px;
     cursor: pointer; width: 100%;
@@ -448,13 +448,6 @@
     font-size: 11px; font-weight: 300; color: #b0ada8;
     text-align: center; letter-spacing: 0.3px;
   }
-
-
-  .smeta-volume {
-    font-size: 11px; font-weight: 300; color: #b0ada8;
-    margin-top: 2px; line-height: 1;
-  }
-  .smeta-name-wrap { display: flex; flex-direction: column; flex: 1; }
 
 </style>
 </head>
@@ -556,7 +549,7 @@
       <div class="smeta-item">
         <div class="smeta-row" onclick="toggleItem(this)">
           <span class="smeta-num">1</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Демонтаж наличников межкомнатных дверей</span><div class="smeta-volume">40 м/п × 50 ₽</div></span>
+          <span class="smeta-name">Демонтаж наличников межкомнатных дверей</span>
           <span class="smeta-price">2 000 ₽</span>
           <span class="smeta-arrow">Для чего?</span>
         </div>
@@ -566,7 +559,7 @@
       <div class="smeta-item">
         <div class="smeta-row" onclick="toggleItem(this)">
           <span class="smeta-num">2</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Оклейка напольного покрытия плёнкой ПВХ</span><div class="smeta-volume">78,2 м/п × 100 ₽</div></span>
+          <span class="smeta-name">Оклейка напольного покрытия плёнкой ПВХ</span>
           <span class="smeta-price">7 820 ₽</span>
           <span class="smeta-arrow">Для чего?</span>
         </div>
@@ -576,7 +569,7 @@
       <div class="smeta-item">
         <div class="smeta-row" onclick="toggleItem(this)">
           <span class="smeta-num">3</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Оклейка напольного плинтуса</span><div class="smeta-volume">74,96 м/п × 75 ₽</div></span>
+          <span class="smeta-name">Оклейка напольного плинтуса</span>
           <span class="smeta-price">5 622 ₽</span>
           <span class="smeta-arrow">Для чего?</span>
         </div>
@@ -586,7 +579,7 @@
       <div class="smeta-item">
         <div class="smeta-row" onclick="toggleItem(this)">
           <span class="smeta-num">4</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Оклейка периметра дверей (тамбур, входная)</span><div class="smeta-volume">9,9 м/п × 100 ₽</div></span>
+          <span class="smeta-name">Оклейка периметра дверей (тамбур, входная)</span>
           <span class="smeta-price">990 ₽</span>
           <span class="smeta-arrow">Для чего?</span>
         </div>
@@ -596,7 +589,7 @@
       <div class="smeta-item">
         <div class="smeta-row" onclick="toggleItem(this)">
           <span class="smeta-num">5</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Оклейка периметра потолка</span><div class="smeta-volume">74,96 м/п × 100 ₽</div></span>
+          <span class="smeta-name">Оклейка периметра потолка</span>
           <span class="smeta-price">7 496 ₽</span>
           <span class="smeta-arrow">Для чего?</span>
         </div>
@@ -610,7 +603,7 @@
       <div class="smeta-item">
         <div class="smeta-row" onclick="toggleItem(this)">
           <span class="smeta-num">6</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Возведение перегородки из ГКЛ в 2 слоя</span><div class="smeta-volume">3,15 м² × 2 900 ₽</div></span>
+          <span class="smeta-name">Возведение перегородки из ГКЛ в 2 слоя</span>
           <span class="smeta-price">9 135 ₽</span>
           <span class="smeta-arrow">Для чего?</span>
         </div>
@@ -620,7 +613,7 @@
       <div class="smeta-item">
         <div class="smeta-row" onclick="toggleItem(this)">
           <span class="smeta-num">7</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Оклейка направляющих профилей уплотнительной лентой</span><div class="smeta-volume">8 м/п × 50 ₽</div></span>
+          <span class="smeta-name">Оклейка направляющих профилей уплотнительной лентой</span>
           <span class="smeta-price">400 ₽</span>
           <span class="smeta-arrow">Для чего?</span>
         </div>
@@ -630,7 +623,7 @@
       <div class="smeta-item">
         <div class="smeta-row" onclick="toggleItem(this)">
           <span class="smeta-num">8</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Армирование стыков листов ГКЛ</span><div class="smeta-volume">13,2 м/п × 350 ₽</div></span>
+          <span class="smeta-name">Армирование стыков листов ГКЛ</span>
           <span class="smeta-price">4 620 ₽</span>
           <span class="smeta-arrow">Для чего?</span>
         </div>
@@ -644,7 +637,7 @@
       <div class="smeta-item">
         <div class="smeta-row" onclick="toggleItem(this)">
           <span class="smeta-num">9</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Грунтование поверхности перегородки из ГКЛ</span><div class="smeta-volume">9,5 м² × 120 ₽</div></span>
+          <span class="smeta-name">Грунтование поверхности перегородки из ГКЛ</span>
           <span class="smeta-price">1 140 ₽</span>
           <span class="smeta-arrow">Для чего?</span>
         </div>
@@ -654,7 +647,7 @@
       <div class="smeta-item">
         <div class="smeta-row" onclick="toggleItem(this)">
           <span class="smeta-num">10</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Нанесение базового слоя шпаклёвки</span><div class="smeta-volume">9,5 м² × 1 250 ₽</div></span>
+          <span class="smeta-name">Нанесение базового слоя шпаклёвки</span>
           <span class="smeta-price">11 875 ₽</span>
           <span class="smeta-arrow">Для чего?</span>
         </div>
@@ -664,7 +657,7 @@
       <div class="smeta-item">
         <div class="smeta-row" onclick="toggleItem(this)">
           <span class="smeta-num">11</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Ошкуривание базового слоя шпаклёвки</span><div class="smeta-volume">9,5 м² × 550 ₽</div></span>
+          <span class="smeta-name">Ошкуривание базового слоя шпаклёвки</span>
           <span class="smeta-price">5 225 ₽</span>
           <span class="smeta-arrow">Для чего?</span>
         </div>
@@ -674,7 +667,7 @@
       <div class="smeta-item">
         <div class="smeta-row" onclick="toggleItem(this)">
           <span class="smeta-num">12</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Грунтование перегородки перед финишем</span><div class="smeta-volume">9,5 м² × 120 ₽</div></span>
+          <span class="smeta-name">Грунтование перегородки перед финишем</span>
           <span class="smeta-price">1 140 ₽</span>
           <span class="smeta-arrow">Для чего?</span>
         </div>
@@ -684,7 +677,7 @@
       <div class="smeta-item">
         <div class="smeta-row" onclick="toggleItem(this)">
           <span class="smeta-num">13</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Заполнение трещин шпаклёвочной смесью</span><div class="smeta-volume">6 усл. ед. × 750 ₽</div></span>
+          <span class="smeta-name">Заполнение трещин шпаклёвочной смесью</span>
           <span class="smeta-price">4 500 ₽</span>
           <span class="smeta-arrow">Для чего?</span>
         </div>
@@ -694,7 +687,7 @@
       <div class="smeta-item">
         <div class="smeta-row" onclick="toggleItem(this)">
           <span class="smeta-num">14</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Нанесение финишного слоя шпаклёвки</span><div class="smeta-volume">9,5 м² × 1 250 ₽</div></span>
+          <span class="smeta-name">Нанесение финишного слоя шпаклёвки</span>
           <span class="smeta-price">11 875 ₽</span>
           <span class="smeta-arrow">Для чего?</span>
         </div>
@@ -704,7 +697,7 @@
       <div class="smeta-item">
         <div class="smeta-row" onclick="toggleItem(this)">
           <span class="smeta-num">15</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Ошкуривание финишного слоя шпаклёвки</span><div class="smeta-volume">9,5 м² × 550 ₽</div></span>
+          <span class="smeta-name">Ошкуривание финишного слоя шпаклёвки</span>
           <span class="smeta-price">5 225 ₽</span>
           <span class="smeta-arrow">Для чего?</span>
         </div>
@@ -718,7 +711,7 @@
       <div class="smeta-item">
         <div class="smeta-row" onclick="toggleItem(this)">
           <span class="smeta-num">16</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Окраска потолка водоэмульсионной краской в 2 слоя</span><div class="smeta-volume">6 м/п × 750 ₽</div></span>
+          <span class="smeta-name">Окраска потолка водоэмульсионной краской в 2 слоя</span>
           <span class="smeta-price">4 500 ₽</span>
           <span class="smeta-arrow">Для чего?</span>
         </div>
@@ -728,7 +721,7 @@
       <div class="smeta-item">
         <div class="smeta-row" onclick="toggleItem(this)">
           <span class="smeta-num">17</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Окраска стен водоэмульсионной краской в 2 слоя</span><div class="smeta-volume">206,87 м² × 490 ₽</div></span>
+          <span class="smeta-name">Окраска стен водоэмульсионной краской в 2 слоя</span>
           <span class="smeta-price">101 366 ₽</span>
           <span class="smeta-arrow">Для чего?</span>
         </div>
@@ -738,7 +731,7 @@
       <div class="smeta-item">
         <div class="smeta-row" onclick="toggleItem(this)">
           <span class="smeta-num">18</span>
-          <span class="smeta-name-wrap"><span class="smeta-name">Монтаж наличников межкомнатных дверей</span><div class="smeta-volume">40 м/п × 75 ₽</div></span>
+          <span class="smeta-name">Монтаж наличников межкомнатных дверей</span>
           <span class="smeta-price">3 000 ₽</span>
           <span class="smeta-arrow">Для чего?</span>
         </div>
