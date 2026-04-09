@@ -286,16 +286,172 @@
   .room-row-label { font-size: 12px; font-weight: 300; color: #a09e99; }
   .room-row-val   { font-size: 12px; font-weight: 300; color: #2a2926; }
 
+
+  .timeline-section { width:100%; background:#f0efec; padding:0 clamp(24px,8vw,64px) clamp(32px,6vw,48px); }
+  .timeline-inner { max-width:620px; margin:0 auto; }
+  .tl-wrap { border:1px solid rgba(0,0,0,0.08); border-radius:12px; padding:24px 20px; }
+  .tl-header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:24px; }
+  .tl-title { font-size:15px; font-weight:400; color:#2a2926; }
+  .tl-days { font-size:28px; font-weight:300; color:#2a2926; letter-spacing:-1px; }
+  .tl-days span { font-size:13px; font-weight:300; }
+  .tl-names { display:flex; justify-content:space-between; margin-bottom:8px; }
+  .tl-name { font-size:10px; font-weight:400; color:#2a2926; max-width:54px; text-align:center; }
+  .tl-track { position:relative; height:2px; background:rgba(0,0,0,0.08); border-radius:1px; }
+  .tl-fill { position:absolute; left:0; top:0; height:100%; background:#2a2926; border-radius:1px; width:0; transition:width 1.2s ease; }
+  .tl-dots { display:flex; justify-content:space-between; margin-top:-5px; }
+  .tl-dot-wrap { display:flex; flex-direction:column; align-items:center; }
+  .tl-dot { width:10px; height:10px; border-radius:50%; background:#f0efec; border:1.5px solid rgba(0,0,0,0.15); flex-shrink:0; margin-bottom:8px; }
+  .tl-dot.done { background:#2a2926; border-color:#2a2926; }
+  .tl-day { font-size:10px; font-weight:300; color:#b0ada8; text-align:center; }
+
+
+  .about-more { display: none; }
+  .about-more.open { display: block; }
+  .about-more p { margin-top: 20px; }
+  .about-toggle {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 16px;
+    background: none; border: none; padding: 0;
+    cursor: pointer;
+    font-family: 'Advent Pro', sans-serif;
+    font-size: 13px; font-weight: 400;
+    color: #a09e99; letter-spacing: 0.3px;
+  }
+  .about-toggle:hover { color: #5a5854; }
+  .about-toggle:hover path { stroke: #5a5854; }
+
+
+  .about-preview {
+    position: relative;
+    overflow: hidden;
+    max-height: 4.8em;
+  }
+  .about-preview::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2.4em;
+    background: linear-gradient(transparent, #f0efec);
+  }
+  .about-body.expanded .about-preview {
+    max-height: none;
+    overflow: visible;
+  }
+  .about-body.expanded .about-preview::after {
+    display: none;
+  }
+
+
+  .contractor-section {
+    width: 100%; background: #f0efec;
+    padding: 0 clamp(24px, 8vw, 64px) clamp(32px, 6vw, 48px);
+  }
+  .contractor-inner { max-width: 620px; margin: 0 auto; }
+  .contractor-card {
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 12px; overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .contractor-top {
+    background: #f0efec;
+    padding: 20px 20px 18px;
+    display: flex; align-items: center; gap: 16px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .contractor-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: #e8e6e2;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 400; color: #5a5854;
+    flex-shrink: 0;
+  }
+  .contractor-name { font-size: 15px; font-weight: 400; color: #2a2926; }
+  .contractor-role { font-size: 12px; font-weight: 300; color: #a09e99; margin-top: 2px; }
+  .contractor-rows { background: #f0efec; }
+  .contractor-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  .contractor-row:last-child { border-bottom: none; }
+  .contractor-row-label { font-size: 12px; font-weight: 300; color: #a09e99; }
+  .contractor-row-val { font-size: 13px; font-weight: 300; color: #2a2926; }
+  .guarantee-card {
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 12px;
+    padding: 18px 20px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .guarantee-label { font-size: 10px; font-weight: 400; letter-spacing: 1.4px; text-transform: uppercase; color: #a09e99; margin-bottom: 4px; }
+  .guarantee-val { font-size: 22px; font-weight: 300; color: #2a2926; letter-spacing: -0.5px; }
+  .guarantee-desc { font-size: 12px; font-weight: 300; color: #a09e99; text-align: right; }
+
+
+  .exclusions-section {
+    width: 100%; background: #f0efec;
+    padding: 0 clamp(24px, 8vw, 64px) clamp(32px, 6vw, 48px);
+  }
+  .exclusions-inner { max-width: 620px; margin: 0 auto; }
+  .exclusions-list {
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 12px; overflow: hidden;
+  }
+  .exclusion-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 13px 20px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    background: #f0efec;
+  }
+  .exclusion-row:last-child { border-bottom: none; }
+  .exclusion-icon {
+    width: 16px; height: 16px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .exclusion-icon svg { width: 14px; height: 14px; }
+  .exclusion-text { font-size: 13px; font-weight: 300; color: #2a2926; flex: 1; }
+  .exclusion-note { font-size: 11px; font-weight: 300; color: #a09e99; white-space: nowrap; }
+
+  .cta-section {
+    width: 100%; background: #f0efec;
+    padding: 0 clamp(24px, 8vw, 64px) clamp(48px, 10vw, 80px);
+  }
+  .cta-inner { max-width: 620px; margin: 0 auto; }
+  .cta-card {
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 12px;
+    padding: 28px 24px;
+    display: flex; flex-direction: column; gap: 20px;
+  }
+  .cta-title { font-size: clamp(18px, 4.5vw, 22px); font-weight: 300; color: #2a2926; letter-spacing: -0.3px; line-height: 1.3; }
+  .cta-sub { font-size: 13px; font-weight: 300; color: #a09e99; margin-top: 4px; }
+  .cta-buttons { display: flex; flex-direction: column; gap: 10px; }
+  .cta-btn-primary {
+    display: block; text-align: center;
+    padding: 14px 20px;
+    background: #2a2926; border-radius: 10px;
+    font-family: 'Advent Pro', sans-serif;
+    font-size: 14px; font-weight: 400; color: #f0efec;
+    text-decoration: none; letter-spacing: 0.2px;
+    border: none; cursor: pointer; width: 100%;
+  }
+  .cta-btn-secondary {
+    display: block; text-align: center;
+    padding: 13px 20px;
+    background: transparent;
+    border: 1px solid rgba(0,0,0,0.12); border-radius: 10px;
+    font-family: 'Advent Pro', sans-serif;
+    font-size: 14px; font-weight: 400; color: #2a2926;
+    text-decoration: none; letter-spacing: 0.2px;
+    cursor: pointer; width: 100%;
+  }
+  .cta-validity {
+    font-size: 11px; font-weight: 300; color: #b0ada8;
+    text-align: center; letter-spacing: 0.3px;
+  }
+
 </style>
 </head>
 <body>
-
-<div id="preloader">
-  <div class="preloader-dot"></div>
-  <div class="preloader-dot"></div>
-  <div class="preloader-dot"></div>
-</div>
-
 <section class="hero">
   <div class="scene" id="scene">
     <img class="folder-img" id="folderImg" src="folder.png" alt="">
@@ -312,8 +468,31 @@
     </div>
   </div>
 </section>
-
-
+<section class="timeline-section">
+  <div class="timeline-inner">
+    <div class="tl-wrap">
+      <div class="tl-header">
+        <span class="tl-title">Срок выполнения</span>
+        <span class="tl-days">10 <span>раб. дней</span></span>
+      </div>
+      <div class="tl-names">
+        <span class="tl-name">Подготовка</span>
+        <span class="tl-name">Перегородка</span>
+        <span class="tl-name">Шпаклёвка</span>
+        <span class="tl-name">Окраска</span>
+        <span class="tl-name">Финиш</span>
+      </div>
+      <div class="tl-track"><div class="tl-fill" id="tlFill"></div></div>
+      <div class="tl-dots">
+        <div class="tl-dot-wrap"><div class="tl-dot done"></div><div class="tl-day">День 1</div></div>
+        <div class="tl-dot-wrap"><div class="tl-dot done"></div><div class="tl-day">День 3</div></div>
+        <div class="tl-dot-wrap"><div class="tl-dot done"></div><div class="tl-day">День 5</div></div>
+        <div class="tl-dot-wrap"><div class="tl-dot"></div><div class="tl-day">День 8</div></div>
+        <div class="tl-dot-wrap"><div class="tl-dot"></div><div class="tl-day">День 10</div></div>
+      </div>
+    </div>
+  </div>
+</section>
 <section class="rooms-section">
   <div class="rooms-inner">
     <p class="about-label">Объект · ул. Красная, 176, кв. 34</p>
@@ -337,77 +516,31 @@
   </div>
 </section>
 
+
 <section class="about">
   <div class="about-inner">
     <p class="about-label">Производство работ</p>
     <h2 class="about-title">Как будет проходить ремонт</h2>
     <div class="about-body">
-      <p>Работы начинаются с защиты готовых поверхностей — напольное покрытие, плинтус и периметр потолка оклеиваются плёнкой ПВХ. Это гарантирует, что всё существующее не пострадает от пыли и механических повреждений в ходе работ. Параллельно снимаем наличники с межкомнатных дверей — они мешают работе и будут установлены заново в финале.</p>
-      <p>Затем переходим к основным конструктивным работам: возводим перегородку из двух слоёв ГКЛ с уплотнительной лентой по периметру. После этого перегородка грунтуется, армируются все стыки листов, трещины заполняются шпаклёвочной смесью — только после этого начинается финишная подготовка поверхностей.</p>
-      <p>Шпаклёвка наносится в два прохода: сначала базовый слой с промежуточным ошкуриванием, затем финишный — под покраску. Каждый слой шкурится отдельно. Это самый трудоёмкий этап, от которого напрямую зависит качество финальной окраски.</p>
-      <p>Завершают работы окраска потолка и стен водоэмульсионной краской в два слоя — 207 м² стен и все потолочные поверхности. В финале устанавливаются наличники на место.</p>
+      <div class="about-preview">
+        <p>Работы начинаются с защиты готовых поверхностей — напольное покрытие, плинтус и периметр потолка оклеиваются плёнкой ПВХ. Это гарантирует, что всё существующее не пострадает от пыли и механических повреждений в ходе работ. Параллельно снимаем наличники с межкомнатных дверей — они мешают</p>
+      </div>
+      <div class="about-more" id="aboutMore">
+        <p>работе и будут установлены заново в финале.</p>
+        <p>Параллельно снимаем наличники с межкомнатных дверей — они мешают работе и будут установлены заново в финале.</p>
+        <p>Затем переходим к основным конструктивным работам: возводим перегородку из двух слоёв ГКЛ с уплотнительной лентой по периметру. После этого перегородка грунтуется, армируются все стыки листов, трещины заполняются шпаклёвочной смесью — только после этого начинается финишная подготовка поверхностей.</p>
+        <p>Шпаклёвка наносится в два прохода: сначала базовый слой с промежуточным ошкуриванием, затем финишный — под покраску. Каждый слой шкурится отдельно. Это самый трудоёмкий этап, от которого напрямую зависит качество финальной окраски.</p>
+        <p>Завершают работы окраска потолка и стен водоэмульсионной краской в два слоя — 207 м² стен и все потолочные поверхности. В финале устанавливаются наличники на место.</p>
+      </div>
+      <button class="about-toggle" id="aboutToggle" onclick="toggleAbout()">
+        <span id="aboutToggleText">Читать полностью</span>
+        <svg id="aboutToggleIcon" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="transition:transform 0.3s ease;flex-shrink:0">
+          <path d="M2 5L7 10L12 5" stroke="#a09e99" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
     </div>
   </div>
 </section>
-
-<script>
-  const preloader = document.getElementById('preloader');
-  const folderImg = document.getElementById('folderImg');
-  const scene     = document.getElementById('scene');
-  const shadow    = document.getElementById('folderShadow');
-
-  function startScene() {
-    preloader.classList.add('hidden');
-    setTimeout(() => preloader.remove(), 400);
-    scene.classList.add('float-in');
-    shadow.classList.add('shadow-in');
-    scene.addEventListener('animationend', () => {
-      scene.classList.remove('float-in');
-      scene.classList.add('idle-loop');
-      shadow.classList.remove('shadow-in');
-      shadow.classList.add('idle-loop');
-    }, { once: true });
-  }
-
-  if (folderImg.complete) {
-    startScene();
-  } else {
-    folderImg.addEventListener('load', startScene);
-    folderImg.addEventListener('error', startScene);
-  }
-
-  function toggleItem(row) {
-    const item = row.closest('.smeta-item');
-    item.classList.toggle('open');
-  }
-
-
-  (function() {
-    var rooms = [
-      { name: 'Тамбур',    floor: 4.61,  walls: 16.63, perim: 8.64  },
-      { name: 'Холл',      floor: 19.09, walls: 44.81, perim: 12.26 },
-      { name: 'Коридор',   floor: 5.14,  walls: 21.71, perim: 7.14  },
-      { name: 'Комната 1', floor: 13.59, walls: 37.25, perim: 14.28 },
-      { name: 'Комната 2', floor: 18.02, walls: 42.78, perim: 16.06 },
-      { name: 'Комната 3', floor: 17.75, walls: 43.69, perim: 16.58 },
-    ];
-    var cols = document.getElementById('roomsCols');
-    if (!cols) return;
-    rooms.forEach(function(r) {
-      var div = document.createElement('div');
-      div.className = 'room';
-      div.innerHTML =
-        '<div class="room-title">' + r.name + '</div>' +
-        '<div class="room-row"><span class="room-row-label">Пол</span><span class="room-row-val">' + r.floor.toFixed(2) + ' м²</span></div>' +
-        '<div class="room-row"><span class="room-row-label">Стены</span><span class="room-row-val">' + r.walls.toFixed(2) + ' м²</span></div>' +
-        '<div class="room-row"><span class="room-row-label">Периметр</span><span class="room-row-val">' + r.perim.toFixed(2) + ' м/п</span></div>';
-      cols.appendChild(div);
-    });
-  })();
-
-</script>
-
-<!-- СМЕТА -->
 <section class="smeta">
   <div class="smeta-inner">
     <p class="about-label">Смета</p>
@@ -616,6 +749,195 @@
 
   </div>
 </section>
+<section class="exclusions-section">
+  <div class="exclusions-inner">
+    <p class="about-label">Не входит в смету</p>
+    <div class="exclusions-list">
+      <div class="exclusion-row">
+        <div class="exclusion-icon"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7H12" stroke="#c8c5c0" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+        <span class="exclusion-text">Вывоз строительного мусора</span>
+        <span class="exclusion-note">оговаривается отдельно</span>
+      </div>
+      <div class="exclusion-row">
+        <div class="exclusion-icon"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7H12" stroke="#c8c5c0" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+        <span class="exclusion-text">Материалы и расходники</span>
+        <span class="exclusion-note">по отдельному счёту</span>
+      </div>
+      <div class="exclusion-row">
+        <div class="exclusion-icon"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7H12" stroke="#c8c5c0" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+        <span class="exclusion-text">Проектная документация</span>
+        <span class="exclusion-note">если потребуется</span>
+      </div>
+      <div class="exclusion-row">
+        <div class="exclusion-icon"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 7H12" stroke="#c8c5c0" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+        <span class="exclusion-text">Работы вне согласованного объёма</span>
+        <span class="exclusion-note">доп. соглашение</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="contractor-section">
+  <div class="contractor-inner">
+    <p class="about-label">Исполнитель</p>
+    <div class="contractor-card">
+      <div class="contractor-top">
+        <div class="contractor-avatar">СК</div>
+        <div>
+          <div class="contractor-name">СтройКомфорт</div>
+          <div class="contractor-role">Подрядчик отделочных работ · Краснодар</div>
+        </div>
+      </div>
+      <div class="contractor-rows">
+        <div class="contractor-row">
+          <span class="contractor-row-label">ИНН</span>
+          <span class="contractor-row-val">2308191234</span>
+        </div>
+        <div class="contractor-row">
+          <span class="contractor-row-label">ОГРН</span>
+          <span class="contractor-row-val">1232300012345</span>
+        </div>
+        <div class="contractor-row">
+          <span class="contractor-row-label">Менеджер проекта</span>
+          <span class="contractor-row-val">Мария Соколова</span>
+        </div>
+        <div class="contractor-row">
+          <span class="contractor-row-label">Телефон</span>
+          <span class="contractor-row-val">+7 (918) 123-45-67</span>
+        </div>
+      </div>
+    </div>
+    <div class="guarantee-card">
+      <div>
+        <div class="guarantee-label">Гарантия</div>
+        <div class="guarantee-val">2 года</div>
+      </div>
+      <div class="guarantee-desc">На все виды<br>выполненных работ</div>
+    </div>
+  </div>
+</section>
+<section class="cta-section">
+  <div class="cta-inner">
+    <div class="cta-card">
+      <div>
+        <div class="cta-title">Готовы приступить?</div>
+        <div class="cta-sub">Цены актуальны до 30 мая 2025 года</div>
+      </div>
+      <div class="cta-buttons">
+        <button class="cta-btn-primary" onclick="window.location='tel:+79181234567'">Позвонить менеджеру</button>
+        <button class="cta-btn-secondary" onclick="window.location='https://wa.me/79181234567'">Написать в WhatsApp</button>
+      </div>
+      <div class="cta-validity">Смета сформирована 09.04.2025 · Действует 30 дней</div>
+    </div>
+  </div>
+</section>
+
+<div id="preloader">
+  <div class="preloader-dot"></div>
+  <div class="preloader-dot"></div>
+  <div class="preloader-dot"></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  const preloader = document.getElementById('preloader');
+  const folderImg = document.getElementById('folderImg');
+  const scene     = document.getElementById('scene');
+  const shadow    = document.getElementById('folderShadow');
+
+  function startScene() {
+    preloader.classList.add('hidden');
+    setTimeout(() => preloader.remove(), 400);
+    scene.classList.add('float-in');
+    shadow.classList.add('shadow-in');
+    scene.addEventListener('animationend', () => {
+      scene.classList.remove('float-in');
+      scene.classList.add('idle-loop');
+      shadow.classList.remove('shadow-in');
+      shadow.classList.add('idle-loop');
+    }, { once: true });
+  }
+
+  if (folderImg.complete) {
+    startScene();
+  } else {
+    folderImg.addEventListener('load', startScene);
+    folderImg.addEventListener('error', startScene);
+  }
+
+  function toggleItem(row) {
+    const item = row.closest('.smeta-item');
+    item.classList.toggle('open');
+  }
+
+
+  (function() {
+    var rooms = [
+      { name: 'Тамбур',    floor: 4.61,  walls: 16.63, perim: 8.64  },
+      { name: 'Холл',      floor: 19.09, walls: 44.81, perim: 12.26 },
+      { name: 'Коридор',   floor: 5.14,  walls: 21.71, perim: 7.14  },
+      { name: 'Комната 1', floor: 13.59, walls: 37.25, perim: 14.28 },
+      { name: 'Комната 2', floor: 18.02, walls: 42.78, perim: 16.06 },
+      { name: 'Комната 3', floor: 17.75, walls: 43.69, perim: 16.58 },
+    ];
+    var cols = document.getElementById('roomsCols');
+    if (!cols) return;
+    rooms.forEach(function(r) {
+      var div = document.createElement('div');
+      div.className = 'room';
+      div.innerHTML =
+        '<div class="room-title">' + r.name + '</div>' +
+        '<div class="room-row"><span class="room-row-label">Пол</span><span class="room-row-val">' + r.floor.toFixed(2) + ' м²</span></div>' +
+        '<div class="room-row"><span class="room-row-label">Стены</span><span class="room-row-val">' + r.walls.toFixed(2) + ' м²</span></div>' +
+        '<div class="room-row"><span class="room-row-label">Периметр</span><span class="room-row-val">' + r.perim.toFixed(2) + ' м/п</span></div>';
+      cols.appendChild(div);
+    });
+  })();
+
+
+  (function() {
+    var fill = document.getElementById('tlFill');
+    if (!fill) return;
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) { if (e.isIntersecting) { fill.style.width='60%'; obs.disconnect(); } });
+    }, { threshold: 0.3 });
+    obs.observe(fill);
+  })();
+
+
+  function toggleAbout() {
+    var more = document.getElementById('aboutMore');
+    var text = document.getElementById('aboutToggleText');
+    var icon = document.getElementById('aboutToggleIcon');
+    var body = more.closest('.about-body');
+    var isOpen = more.classList.toggle('open');
+    body.classList.toggle('expanded', isOpen);
+    text.textContent = isOpen ? 'Свернуть' : 'Читать полностью';
+    icon.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+  }
+
+</script>
+
+<!-- СМЕТА -->
+
+
+
+
+
+
+
+
 
 </body>
 </html>
