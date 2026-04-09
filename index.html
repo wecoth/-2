@@ -241,6 +241,51 @@
     color: #2a2926; letter-spacing: -0.5px;
   }
 
+
+  .rooms-section {
+    width: 100%; background: #f0efec;
+    padding: 0 clamp(24px, 8vw, 64px) clamp(48px, 10vw, 88px);
+  }
+  .rooms-inner { max-width: 620px; margin: 0 auto; }
+
+  .totals {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: rgba(0,0,0,0.08);
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 12px; overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .total-cell {
+    background: #f0efec; padding: 20px 16px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .total-num { font-size: 26px; font-weight: 300; color: #2a2926; letter-spacing: -0.8px; line-height: 1; }
+  .total-unit { font-size: 13px; font-weight: 300; color: #2a2926; }
+  .total-desc { font-size: 10px; letter-spacing: 0.5px; color: #a09e99; text-transform: uppercase; }
+
+  .rooms-cols {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: rgba(0,0,0,0.08);
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 12px; overflow: hidden;
+  }
+  .room {
+    background: #f0efec;
+    padding: 18px 16px 14px;
+  }
+  .room-title {
+    font-size: 15px; font-weight: 400;
+    color: #2a2926; margin-bottom: 12px;
+  }
+  .room-row {
+    display: flex; justify-content: space-between;
+    align-items: baseline; padding: 6px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  .room-row:last-child { border-bottom: none; }
+  .room-row-label { font-size: 12px; font-weight: 300; color: #a09e99; }
+  .room-row-val   { font-size: 12px; font-weight: 300; color: #2a2926; }
+
 </style>
 </head>
 <body>
@@ -265,6 +310,30 @@
         <p class="f-total-label">Итоговая стоимость</p>
       </div>
     </div>
+  </div>
+</section>
+
+
+<section class="rooms-section">
+  <div class="rooms-inner">
+    <p class="about-label">Объект · ул. Красная, 176, кв. 34</p>
+
+    <div class="totals">
+      <div class="total-cell">
+        <div class="total-num">78<span class="total-unit"> м²</span></div>
+        <div class="total-desc">площадь пола</div>
+      </div>
+      <div class="total-cell">
+        <div class="total-num">207<span class="total-unit"> м²</span></div>
+        <div class="total-desc">площадь стен</div>
+      </div>
+      <div class="total-cell">
+        <div class="total-num">75<span class="total-unit"> м/п</span></div>
+        <div class="total-desc">периметр</div>
+      </div>
+    </div>
+
+    <div class="rooms-cols" id="roomsCols"></div>
   </div>
 </section>
 
@@ -311,6 +380,30 @@
     const item = row.closest('.smeta-item');
     item.classList.toggle('open');
   }
+
+
+  (function() {
+    var rooms = [
+      { name: 'Тамбур',    floor: 4.61,  walls: 16.63, perim: 8.64  },
+      { name: 'Холл',      floor: 19.09, walls: 44.81, perim: 12.26 },
+      { name: 'Коридор',   floor: 5.14,  walls: 21.71, perim: 7.14  },
+      { name: 'Комната 1', floor: 13.59, walls: 37.25, perim: 14.28 },
+      { name: 'Комната 2', floor: 18.02, walls: 42.78, perim: 16.06 },
+      { name: 'Комната 3', floor: 17.75, walls: 43.69, perim: 16.58 },
+    ];
+    var cols = document.getElementById('roomsCols');
+    if (!cols) return;
+    rooms.forEach(function(r) {
+      var div = document.createElement('div');
+      div.className = 'room';
+      div.innerHTML =
+        '<div class="room-title">' + r.name + '</div>' +
+        '<div class="room-row"><span class="room-row-label">Пол</span><span class="room-row-val">' + r.floor.toFixed(2) + ' м²</span></div>' +
+        '<div class="room-row"><span class="room-row-label">Стены</span><span class="room-row-val">' + r.walls.toFixed(2) + ' м²</span></div>' +
+        '<div class="room-row"><span class="room-row-label">Периметр</span><span class="room-row-val">' + r.perim.toFixed(2) + ' м/п</span></div>';
+      cols.appendChild(div);
+    });
+  })();
 
 </script>
 
