@@ -728,8 +728,8 @@ function renderStages(stages, totalDays) {
     const startDay = i === 0 ? 1 : stages[i - 1].day + 1;
     const endDay   = s.day;
     const dur      = Math.max(1, endDay - startDay + 1);
-    const leftPct  = ((startDay - 1) / maxDay) * 100;
-    const widthPct = (dur / maxDay) * 100;
+    const leftPct  = Math.min(((startDay - 1) / maxDay) * 100, 99);
+    const widthPct = Math.min((dur / maxDay) * 100, 100 - leftPct);
 
     const row = document.createElement('div');
     row.className = 'tl-gantt-row';
