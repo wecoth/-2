@@ -290,19 +290,19 @@
   .timeline-section { width:100%; background:#f0efec; padding:0 clamp(24px,8vw,64px) clamp(32px,6vw,48px); }
   .timeline-inner { max-width:620px; margin:0 auto; }
   .tl-wrap { border:1px solid rgba(0,0,0,0.08); border-radius:12px; padding:24px 20px; }
-  .tl-header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:24px; }
+  .tl-header { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:20px; }
   .tl-title { font-size:15px; font-weight:400; color:#2a2926; }
   .tl-days { font-size:28px; font-weight:300; color:#2a2926; letter-spacing:-1px; }
   .tl-days span { font-size:13px; font-weight:300; }
-  .tl-names { display:flex; justify-content:space-between; margin-bottom:8px; }
-  .tl-name { font-size:10px; font-weight:400; color:#2a2926; max-width:54px; text-align:center; }
-  .tl-track { position:relative; height:2px; background:rgba(0,0,0,0.08); border-radius:1px; }
-  .tl-fill { position:absolute; left:0; top:0; height:100%; background:#2a2926; border-radius:1px; width:0; transition:width 1.2s ease; }
-  .tl-dots { display:flex; justify-content:space-between; margin-top:-5px; }
-  .tl-dot-wrap { display:flex; flex-direction:column; align-items:center; }
-  .tl-dot { width:10px; height:10px; border-radius:50%; background:#f0efec; border:1.5px solid rgba(0,0,0,0.15); flex-shrink:0; margin-bottom:8px; }
-  .tl-dot.done { background:#2a2926; border-color:#2a2926; }
-  .tl-day { font-size:10px; font-weight:300; color:#b0ada8; text-align:center; }
+  /* Gantt */
+  .tl-gantt { display:flex; flex-direction:column; gap:6px; }
+  .tl-gantt-row { display:flex; align-items:center; gap:10px; }
+  .tl-gantt-label { width:110px; flex-shrink:0; font-size:10px; font-weight:400; color:#a09e99; text-align:right; letter-spacing:0.1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .tl-gantt-track { flex:1; height:22px; background:rgba(0,0,0,0.04); border-radius:5px; position:relative; }
+  .tl-gantt-bar { position:absolute; top:3px; height:16px; border-radius:3px; background:#2a2926; display:flex; align-items:center; padding:0 7px; min-width:22px; transition:left .6s ease, width .6s ease; }
+  .tl-gantt-bar.done { background:#2a2926; }
+  .tl-gantt-bar.pending { background:rgba(0,0,0,0.13); }
+  .tl-gantt-dur { font-size:10px; font-weight:400; color:rgba(255,255,255,0.72); white-space:nowrap; }
 
 
   .about-more { display: none; }
@@ -487,9 +487,7 @@
         <span class="tl-title">Срок выполнения</span>
         <span class="tl-days"><span data-bind="duration_days">—</span> <span>раб. дней</span></span>
       </div>
-      <div class="tl-names" id="tlNames"></div>
-      <div class="tl-track"><div class="tl-fill" id="tlFill"></div></div>
-      <div class="tl-dots" id="tlDots"></div>
+      <div class="tl-gantt" id="tlGantt"></div>
     </div>
   </div>
 </section>
@@ -718,32 +716,41 @@ function renderRooms(rooms) {
    РЕНДЕР: таймлайн этапов
    ============================================================ */
 function renderStages(stages, totalDays) {
-  const names = document.getElementById('tlNames');
-  const dots = document.getElementById('tlDots');
-  if (!names || !dots || !stages) return;
-  names.innerHTML = '';
-  dots.innerHTML = '';
-  stages.forEach(function(s) {
-    const n = document.createElement('span');
-    n.className = 'tl-name';
-    n.textContent = s.name;
-    names.appendChild(n);
+  const gantt = document.getElementById('tlGantt');
+  if (!gantt || !stages || stages.length === 0) return;
+  gantt.innerHTML = '';
 
-    const wrap = document.createElement('div');
-    wrap.className = 'tl-dot-wrap';
-    wrap.innerHTML =
-      '<div class="tl-dot' + (s.done ? ' done' : '') + '"></div>' +
-      '<div class="tl-day">День ' + s.day + '</div>';
-    dots.appendChild(wrap);
+  // Вычисляем общий диапазон дней
+  const maxDay = totalDays || stages.reduce(function(m, s) { return Math.max(m, s.day); }, 0) || 1;
+
+  stages.forEach(function(s, i) {
+    // Определяем start/end для каждого этапа
+    const startDay = i === 0 ? 1 : stages[i - 1].day + 1;
+    const endDay   = s.day;
+    const dur      = Math.max(1, endDay - startDay + 1);
+    const leftPct  = ((startDay - 1) / maxDay) * 100;
+    const widthPct = (dur / maxDay) * 100;
+
+    const row = document.createElement('div');
+    row.className = 'tl-gantt-row';
+    row.innerHTML =
+      '<span class="tl-gantt-label">' + escapeHtml(s.name) + '</span>' +
+      '<div class="tl-gantt-track">' +
+        '<div class="tl-gantt-bar ' + (s.done ? 'done' : 'pending') + '" ' +
+          'style="left:' + leftPct.toFixed(1) + '%;width:0"' +
+          ' data-width="' + widthPct.toFixed(1) + '%">' +
+          '<span class="tl-gantt-dur">' + dur + 'д</span>' +
+        '</div>' +
+      '</div>';
+    gantt.appendChild(row);
   });
 
-  // полоса заполнения = доля выполненных этапов
-  const doneCount = stages.filter(function(s) { return s.done; }).length;
-  const pct = stages.length > 0 ? Math.round((doneCount / stages.length) * 100) : 0;
+  // Анимируем ширину после небольшой задержки
   setTimeout(function() {
-    const fill = document.getElementById('tlFill');
-    if (fill) fill.style.width = pct + '%';
-  }, 600);
+    gantt.querySelectorAll('.tl-gantt-bar').forEach(function(bar) {
+      bar.style.width = bar.dataset.width;
+    });
+  }, 300);
 }
 
 /* ============================================================
@@ -965,16 +972,6 @@ function toggleAbout() {
   text.textContent = isOpen ? 'Свернуть' : 'Читать полностью';
   icon.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
 }
-
-// Полоса таймлайна — наблюдатель оставляем на случай если этапы рендерятся до показа
-(function() {
-  const fill = document.getElementById('tlFill');
-  if (!fill) return;
-  const obs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) { if (e.isIntersecting) { obs.disconnect(); } });
-  }, { threshold: 0.3 });
-  obs.observe(fill);
-})();
 
 // Старт
 loadSmeta();
