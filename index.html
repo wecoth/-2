@@ -6,12 +6,12 @@
 <title>Смета</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Advent+Pro:wght@300;400;500&family=Raleway:wght@100;200;300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Raleway:wght@100;200;300&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
   html, body {
     width: 100%; min-height: 100%;
-    font-family: 'Advent Pro', sans-serif;
+    font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
     background: #f0efec;
   }
@@ -108,8 +108,8 @@
     margin-bottom: 32px;
   }
   .about-body {
-    font-size: clamp(15px, 3.8vw, 17px); font-weight: 300;
-    color: #5a5854; line-height: 1.72; letter-spacing: 0.1px;
+    font-size: clamp(15px, 3.8vw, 17px); font-weight: 400;
+    color: #3a3835; line-height: 1.72; letter-spacing: 0.1px;
   }
   .about-body p + p { margin-top: 20px; }
 
@@ -181,7 +181,7 @@
     color: #b0ada8; min-width: 18px; flex-shrink: 0;
   }
   .smeta-name {
-    font-size: clamp(14px, 3.5vw, 15px); font-weight: 300;
+    font-size: clamp(14px, 3.5vw, 15px); font-weight: 400;
     color: #2a2926; flex: 1; line-height: 1.4;
   }
   .smeta-price {
@@ -218,8 +218,8 @@
   }
 
   .smeta-detail {
-    font-size: clamp(13px, 3.2vw, 14px); font-weight: 300;
-    color: #6e6b66; line-height: 1.65;
+    font-size: clamp(13px, 3.2vw, 14px); font-weight: 400;
+    color: #4e4b47; line-height: 1.65;
     padding: 0 0 16px 28px;
     display: none;
   }
@@ -313,7 +313,7 @@
     margin-top: 16px;
     background: none; border: none; padding: 0;
     cursor: pointer;
-    font-family: 'Advent Pro', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 13px; font-weight: 400;
     color: #a09e99; letter-spacing: 0.3px;
   }
@@ -429,7 +429,7 @@
     display: block; text-align: center;
     padding: 14px 20px;
     background: #2a2926; border-radius: 10px;
-    font-family: 'Advent Pro', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 14px; font-weight: 400; color: #f0efec;
     text-decoration: none; letter-spacing: 0.2px;
     border: none; cursor: pointer; width: 100%;
@@ -439,7 +439,7 @@
     padding: 13px 20px;
     background: transparent;
     border: 1px solid rgba(0,0,0,0.12); border-radius: 10px;
-    font-family: 'Advent Pro', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 14px; font-weight: 400; color: #2a2926;
     text-decoration: none; letter-spacing: 0.2px;
     cursor: pointer; width: 100%;
@@ -547,47 +547,6 @@
   <div class="exclusions-inner">
     <p class="about-label">Что не входит в смету</p>
     <div class="exclusions-list" id="exclusionsList"></div>
-  </div>
-</section>
-
-<!-- ИСПОЛНИТЕЛЬ -->
-<section class="contractor-section">
-  <div class="contractor-inner">
-    <p class="about-label">Исполнитель</p>
-    <div class="contractor-card">
-      <div class="contractor-top">
-        <div class="contractor-avatar" data-bind="contractor_initials">—</div>
-        <div>
-          <div class="contractor-name" data-bind="contractor_name">—</div>
-          <div class="contractor-role" data-bind="contractor_role">—</div>
-        </div>
-      </div>
-      <div class="contractor-rows">
-        <div class="contractor-row">
-          <span class="contractor-row-label">ИНН</span>
-          <span class="contractor-row-val" data-bind="contractor_inn">—</span>
-        </div>
-        <div class="contractor-row">
-          <span class="contractor-row-label">ОГРН</span>
-          <span class="contractor-row-val" data-bind="contractor_ogrn">—</span>
-        </div>
-        <div class="contractor-row">
-          <span class="contractor-row-label">Менеджер проекта</span>
-          <span class="contractor-row-val" data-bind="contractor_manager">—</span>
-        </div>
-        <div class="contractor-row">
-          <span class="contractor-row-label">Телефон</span>
-          <span class="contractor-row-val" data-bind="contractor_phone">—</span>
-        </div>
-      </div>
-    </div>
-    <div class="guarantee-card">
-      <div>
-        <div class="guarantee-label">Гарантия</div>
-        <div class="guarantee-val" data-bind="guarantee">—</div>
-      </div>
-      <div class="guarantee-desc">На все виды<br>выполненных работ</div>
-    </div>
   </div>
 </section>
 
@@ -721,13 +680,12 @@ function renderStages(stages, totalDays) {
   gantt.innerHTML = '';
 
   // Вычисляем общий диапазон дней
-  const maxDay = totalDays || stages.reduce(function(m, s) { return Math.max(m, s.day); }, 0) || 1;
+  const maxDay = totalDays || stages.reduce(function(m, s) { return Math.max(m, (s.day || 1) + (s.duration || 1) - 1); }, 0) || 1;
 
   stages.forEach(function(s, i) {
-    // Определяем start/end для каждого этапа
-    const startDay = i === 0 ? 1 : stages[i - 1].day + 1;
-    const endDay   = s.day;
-    const dur      = Math.max(1, endDay - startDay + 1);
+    // s.day — начало этапа (1-based), s.duration — длительность в днях
+    const startDay = s.day || 1;
+    const dur      = s.duration || 1;
     const leftPct  = Math.min(((startDay - 1) / maxDay) * 100, 99);
     const widthPct = Math.min((dur / maxDay) * 100, 100 - leftPct);
 
